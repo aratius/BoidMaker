@@ -1,0 +1,54 @@
+@import "../foundation/variables";
+
+//フォントサイズ
+@mixin fs32 { font-size: 2rem; }
+@mixin fs24 { font-size: 1.5rem; }
+@mixin fs23 { font-size: 1.4375rem; }
+@mixin fs22 { font-size: 1.375rem; }
+@mixin fs21 { font-size: 1.3125rem; }
+@mixin fs20 { font-size: 1.25rem; }
+@mixin fs19 { font-size: 1.1875rem; }
+@mixin fs18 { font-size: 1.125rem; }
+@mixin fs17 { font-size: 1.0625rem; }
+@mixin fs16 { font-size: 1rem; }
+@mixin fs15 { font-size: 0.9375rem; }
+@mixin fs14 { font-size: 0.875rem; }
+@mixin fs13 { font-size: 0.8125rem; }
+@mixin fs12 { font-size: 0.75rem; }
+
+//4グリッド
+@mixin grid4 {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+//3グリッド（1000px以下）
+@mixin grid3 {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 100%;
+}
+
+//テキストリンク＋線
+@mixin textlinkwithline {
+    display: inline-block;
+    position: relative;
+    @include fs14;
+    letter-spacing: 0.05rem;
+    color: $GRAY_COLOR;
+    padding-right: 1.75rem;
+    &::after{
+        content: "";
+        position: absolute;
+        top: 0.45rem;
+        right: 0;
+        width: 15px;
+        height: 1px;
+        background-color: $GRAY_COLOR;
+    }
+}

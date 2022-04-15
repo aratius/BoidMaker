@@ -1,0 +1,6 @@
+{
+	"editor.formatOnSave": true,
+	"typescript.format.semicolons": "insert",
+	"javascript.preferences.jsxAttributeCompletionStyle": "braces",
+	"typescript.preferences.jsxAttributeCompletionStyle": "braces",
+}
