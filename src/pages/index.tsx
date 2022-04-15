@@ -1,6 +1,5 @@
 import { Component, ReactElement } from "react";
-import Hoge from "src/components/hoge";
-import Svg from "public/test.svg";
+import MakerMain from "src/lib/webgl/maker";
 
 interface Props { }
 interface State { }
@@ -16,12 +15,17 @@ export default class Index extends Component {
 	public componentDidMount(): void {
 	}
 
+	private _onRef = (node: HTMLDivElement): void => {
+		if(!node) return
+		const webgl = new MakerMain(node)
+		webgl.init()
+	}
+
 	public render(): ReactElement {
 		return (
-			<>
-				<Svg />
-				<Hoge />
-			</>
+			<div ref={this._onRef}>
+
+			</div>
 		);
 	}
 }
