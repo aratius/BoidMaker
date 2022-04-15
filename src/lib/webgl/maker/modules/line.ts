@@ -10,6 +10,10 @@ export default class Line extends Graphics {
 		super()
 	}
 
+	/**
+	 * 更新
+	 * @param points
+	 */
 	public update(points: Vec2[]): void {
 
 	}

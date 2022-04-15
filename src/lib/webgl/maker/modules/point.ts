@@ -2,7 +2,7 @@ import { Graphics } from "pixi.js";
 import Vec2 from "vec2";
 
 /**
- * 拡張点をビジュアライズ
+ * 各頂点
  */
 export default class Point extends Graphics {
 
@@ -10,6 +10,10 @@ export default class Point extends Graphics {
 		super()
 	}
 
+	/**
+	 * 更新
+	 * @param points
+	 */
 	public update(points: Vec2[]): void {
 
 	}
