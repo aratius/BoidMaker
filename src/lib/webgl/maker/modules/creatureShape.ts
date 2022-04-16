@@ -40,10 +40,10 @@ export default class CreatureShape extends Container {
 	public init(): void {
 		this._p = new Points()
 		this._p.zIndex = 3
-		this._s = new Shape()
-		this._s.zIndex = 1
 		this._l = new Line()
 		this._l.zIndex = 2
+		this._s = new Shape()
+		this._s.zIndex = 1
 		this.addChild(this._p, this._s, this._l)
 
 		this.update()
@@ -54,9 +54,9 @@ export default class CreatureShape extends Container {
 		const pointsRect = new Vec2(300, 300)
 		const stageSize = new Vec2(300, 300)
 		const points = this._points.map(p => p.divide(pointsRect).multiply(stageSize))
-		this._p.update(points)
-		this._s.update(points)
-		this._l.update(points)
+		this._p?.update(points)
+		this._l?.update(points)
+		this._s?.update(points)
 	}
 
 	/**
@@ -64,6 +64,9 @@ export default class CreatureShape extends Container {
 	 */
 	public preview(): void {
 		// TODO: モード切替
+		this._p.visible = false
+		this._l.visible = false
+		this._s.visible = true
 
 		this._isEditing = false
 	}
@@ -73,6 +76,9 @@ export default class CreatureShape extends Container {
 	 */
 	public edit(): void {
 		// TODO: モード切替
+		this._p.visible = true
+		this._l.visible = true
+		this._s.visible = true
 
 		this._isEditing = true
 	}
