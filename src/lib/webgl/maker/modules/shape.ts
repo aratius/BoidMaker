@@ -17,7 +17,11 @@ export default class Shape extends Graphics {
 	 * @param points
 	 */
 	public update(points: (typeof Vec2)[]): void {
-
+		this.beginFill(0xff0000, 1)
+		for (let i = 0; i < points.length; i++) {
+			const p = points[i]
+			i == 0 ? this.moveTo(p.x, p.y) : this.lineTo(p.x, p.y)
+		}
 	}
 
 }
