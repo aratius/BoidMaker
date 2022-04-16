@@ -1,4 +1,4 @@
-export const svg = `
+export const svgXml = `
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672.09 661.88">
 <g id="a"/>

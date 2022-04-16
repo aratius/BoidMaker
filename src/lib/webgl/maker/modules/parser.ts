@@ -14,6 +14,8 @@ export default class Parser {
 	public static parsePoints(svgStr: string): Vec2[] {
 		const parser = new DOMParser()
 		const xml = svgStr
+		console.log(xml);
+
 		const doc = parser.parseFromString(xml, "image/svg+xml")
 		console.log(doc);
 

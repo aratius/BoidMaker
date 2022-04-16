@@ -1,23 +1,28 @@
-import { Application } from "pixi.js";
+const isClient = typeof window !== "undefined"
+import Parser from "./modules/parser";
+import { svgXml } from "./modules/svg";
+const Application = isClient ? require("pixi.js").Application : undefined
 
 /**
  * Makerのエントリーポイント
  */
 export default class MakerMain {
 
-	private _app?: Application
+	private _app?: typeof Application
 
 	constructor(dom: HTMLElement) {
-		this._app = new Application({ width: innerWidth, height: innerHeight })
-		dom.appendChild(this._app.view)
-		window.addEventListener("resize", this._onResize)
+		if (typeof document !== undefined) {
+			this._app = new Application({ width: innerWidth, height: innerHeight })
+			dom.appendChild(this._app.view)
+			window.addEventListener("resize", this._onResize)
+		}
 	}
 
 	/**
 	 * 初期化
 	 */
 	public init(): void {
-
+		Parser.parsePoints(svgXml)
 	}
 
 	/**
