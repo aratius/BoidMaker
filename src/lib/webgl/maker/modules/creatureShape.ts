@@ -39,10 +39,10 @@ export default class CreatureShape extends Container {
 	 */
 	public init(): void {
 		this._p = new Points()
-		this._p.zIndex = 3
 		this._l = new Line()
-		this._l.zIndex = 2
 		this._s = new Shape()
+		this._p.zIndex = 3
+		this._l.zIndex = 2
 		this._s.zIndex = 1
 		this.addChild(this._p, this._s, this._l)
 
