@@ -6,6 +6,7 @@ import Shape from "./shape"
 const isClient = typeof window !== "undefined"
 const Container = isClient ? require("pixi.js").Container : class { }
 const Graphics = isClient ? require("pixi.js").Graphics : class { }
+const InteractionEvent = isClient ? require("pixi.js").InteractionEvent : class { }
 const Vec2 = isClient ? require("vec2") : undefined
 
 /**
@@ -15,6 +16,7 @@ export default class CreatureShape extends Container {
 
 	public type: string = "not definced"
 	private _points: (typeof Vec2)[] = []  // 頂点情報の配列
+	private _grabPoints: (typeof Graphics)[] = []
 	private _p?: (typeof Graphics)
 	private _s?: (typeof Graphics)
 	private _l?: (typeof Graphics)
@@ -32,6 +34,7 @@ export default class CreatureShape extends Container {
 		this._points = points
 
 		this.sortableChildren = true
+		this.interactive = true
 	}
 
 	/**
@@ -46,6 +49,18 @@ export default class CreatureShape extends Container {
 		this._s.zIndex = 1
 		this.addChild(this._p, this._s, this._l)
 
+		this._grabPoints = this._points.map(_ => {
+			const g = new Graphics()
+			// 本番は見えないようにする
+			g.beginFill(0x00ff00, 1)
+			g.interactive = true
+			this.addChild(g)
+
+			g.on("mousedown", this._onMouseDown)
+
+			return g
+		})
+
 		this.update()
 	}
 
@@ -57,6 +72,11 @@ export default class CreatureShape extends Container {
 		this._p?.update(points)
 		this._l?.update(points)
 		this._s?.update(points)
+
+		this._grabPoints.map((g, i) => {
+			const p = this._points[i]
+			g.drawCircle(p.x, p.y, 10, 10)
+		})
 	}
 
 	/**
@@ -108,6 +128,79 @@ export default class CreatureShape extends Container {
 	 */
 	public divide(ratio: number): void {
 		if (!this._isEditing) return
+
+	}
+
+	/**
+	 * タッチスタート
+	 */
+	private _onTouchStart(e: (typeof InteractionEvent)): void {
+
+	}
+
+	/**
+	 * タッチムーブ
+	 */
+	private _onTouchMove(e: (typeof InteractionEvent)): void {
+
+	}
+
+	/**
+	 * タッチエンド
+	 */
+	private _onTouchEnd(e: (typeof InteractionEvent)): void {
+
+	}
+
+	/**
+	 * マウスダウン
+	 */
+	private _onMouseDown = (e: (typeof InteractionEvent)): void => {
+		const p = e.data.getLocalPosition(this)
+		// isFind
+		this.on("mousemove", this._onMouseMove)
+		this.on("mouseup", this._onMouseUp)
+	}
+
+	/**
+	 * マウスムーブ
+	 */
+	private _onMouseMove = (e: (typeof InteractionEvent)): void => {
+		const p = e.data.getLocalPosition(this)
+	}
+
+	/**
+	 * マウスアップ
+	 */
+	private _onMouseUp = (e: (typeof InteractionEvent)): void => {
+		const p = e.data.getLocalPosition(this)
+
+		this.off("mousemove", this._onMouseMove)
+		this.off("mouseup", this._onMouseUp)
+	}
+
+
+	/**
+	 * マウス or タッチ押下
+	 * @param p
+	 */
+	private _onDown(p: (typeof Vec2)): void {
+
+	}
+
+	/**
+	 * マウス or タッチ移動
+	 * @param p
+	 */
+	private _onMove(p: (typeof Vec2)): void {
+
+	}
+
+	/**
+	 * マウス or タッチ終了
+	 * @param p
+	 */
+	private _onUp(p: (typeof Vec2)): void {
 
 	}
 

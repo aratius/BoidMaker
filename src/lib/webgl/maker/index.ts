@@ -40,46 +40,6 @@ export default class MakerMain {
 
 	}
 
-	/**
-	 * タッチスタート
-	 */
-	private _onTouchStart(): void {
 
-	}
-
-	/**
-	 * タッチムーブ
-	 */
-	private _onTouchMove(): void {
-
-	}
-
-	/**
-	 * タッチエンド
-	 */
-	private _onTouchEnd(): void {
-
-	}
-
-	/**
-	 * マウスダウン
-	 */
-	private _onMouseDown(): void {
-
-	}
-
-	/**
-	 * マウスムーブ
-	 */
-	private _onMouseMove(): void {
-
-	}
-
-	/**
-	 * マウスアップ
-	 */
-	private _onMouseUp(): void {
-
-	}
 
 }
