@@ -1,4 +1,6 @@
+import Line from "./line"
 import Points from "./points"
+import Shape from "./shape"
 
 const isClient = typeof window !== "undefined"
 const Container = isClient ? require("pixi.js").Container : class { }
@@ -36,8 +38,13 @@ export default class CreatureShape extends Container {
 
 		const points = this._points.map(p => p.divide(pointsRect).multiply(stageSize))
 		const p = new Points()
-		this.addChild(p)
 		p.update(points)
+		const s = new Shape()
+		s.update(points)
+		const l = new Line()
+		l.update(points)
+
+		this.addChild(p, s, l)
 	}
 
 	/**

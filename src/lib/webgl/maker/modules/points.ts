@@ -1,5 +1,4 @@
 const isClient = typeof window !== "undefined"
-const Container = isClient ? require("pixi.js").Container : class { }
 const Graphics = isClient ? require("pixi.js").Graphics : class { }
 const Vec2 = isClient ? require("vec2") : undefined
 

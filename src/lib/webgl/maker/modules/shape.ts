@@ -1,5 +1,6 @@
-import { Graphics } from "pixi.js";
-import Vec2 from "vec2";
+const isClient = typeof window !== "undefined"
+const Graphics = isClient ? require("pixi.js").Graphics : class { }
+const Vec2 = isClient ? require("vec2") : undefined
 
 /**
  * 形
@@ -15,7 +16,7 @@ export default class Shape extends Graphics {
 	 * 更新
 	 * @param points
 	 */
-	public update(points: Vec2[]): void {
+	public update(points: (typeof Vec2)[]): void {
 
 	}
 
