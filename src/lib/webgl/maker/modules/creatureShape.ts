@@ -2,6 +2,7 @@ import Line from "./line"
 import Points from "./points"
 import Shape from "./shape"
 
+// pixi.js modules
 const isClient = typeof window !== "undefined"
 const Container = isClient ? require("pixi.js").Container : class { }
 const Graphics = isClient ? require("pixi.js").Graphics : class { }
@@ -14,6 +15,9 @@ export default class CreatureShape extends Container {
 
 	public type: string = "not definced"
 	private _points: (typeof Vec2)[] = []  // 頂点情報の配列
+	private _p?: (typeof Graphics)
+	private _s?: (typeof Graphics)
+	private _l?: (typeof Graphics)
 	private _segmentRatio: number = 2  // 分割数の倍率
 	private _isEditing: boolean = false  // 編集モードかどうか, falseならプレビューモード
 
@@ -32,19 +36,22 @@ export default class CreatureShape extends Container {
 	 * 初期化
 	 */
 	public init(): void {
+		this._p = new Points()
+		this._s = new Shape()
+		this._l = new Line()
+		this.addChild(this._p, this._s, this._l)
+
+		this.update()
+	}
+
+	public update(): void {
 		// TODO: ここハードコードなので
 		const pointsRect = new Vec2(300, 300)
 		const stageSize = new Vec2(300, 300)
-
 		const points = this._points.map(p => p.divide(pointsRect).multiply(stageSize))
-		const p = new Points()
-		p.update(points)
-		const s = new Shape()
-		s.update(points)
-		const l = new Line()
-		l.update(points)
-
-		this.addChild(p, s, l)
+		this._p.update(points)
+		this._s.update(points)
+		this._l.update(points)
 	}
 
 	/**
