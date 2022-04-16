@@ -1,12 +1,15 @@
-import { Container } from "pixi.js";
-import Vec2 from "vec2"
+const isClient = typeof window !== "undefined"
+const Container = isClient ? require("pixi.js").Container : class { }
+const Graphics = isClient ? require("pixi.js").Graphics : class { }
+const Vec2 = isClient ? require("vec2") : undefined
 
 /**
  * 生物の形
  */
 export default class CreatureShape extends Container {
 
-	private _points: Vec2[] = []  // 頂点情報の配列
+	public type: string = "not definced"
+	private _points: (typeof Vec2)[] = []  // 頂点情報の配列
 	private _segmentRatio: number = 2  // 分割数の倍率
 	private _isEditing: boolean = false  // 編集モードかどうか, falseならプレビューモード
 
@@ -15,15 +18,29 @@ export default class CreatureShape extends Container {
 	 * @param base ベースとなるSVG頂点
 	 * @param type 生き物の種類
 	 */
-	constructor(base: JSON, type: string) {
+	constructor(points: (typeof Vec2)[], type: string) {
 		super()
+		this.type = type
+		this._points = points
 	}
 
 	/**
 	 * 初期化
 	 */
 	public init(): void {
+		// TODO: ここ柔軟にする
+		const pointsRect = new Vec2(300, 300)
+		const stageSize = new Vec2(300, 300)
 
+		const pointsNormalized = this._points.map(p => new Vec2(p.x / pointsRect.x, p.y / pointsRect.y))
+		for (let i = 0; i < pointsNormalized.length; i++) {
+			const p = pointsNormalized[i].multiply(stageSize)
+			const g = new Graphics()
+			g.beginFill(0xfff000, 1)
+			g.drawCircle(p.x, p.y, 10, 10)
+
+			this.addChild(g)
+		}
 	}
 
 	/**

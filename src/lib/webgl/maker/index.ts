@@ -1,5 +1,8 @@
+import CreatureShape from "./modules/creatureShape"
+import Parser from "./modules/parser"
+import { svgXml } from "./modules/svg"
 const isClient = typeof window !== "undefined"
-const Application = isClient ? require("pixi.js").Application : undefined
+const Application = isClient ? require("pixi.js").Application : class { }
 
 /**
  * Makerのエントリーポイント
@@ -7,6 +10,7 @@ const Application = isClient ? require("pixi.js").Application : undefined
 export default class MakerMain {
 
 	private _app?: typeof Application
+	private _shape?: CreatureShape
 
 	/**
 	 * コンストラクタ
@@ -17,13 +21,16 @@ export default class MakerMain {
 		dom.appendChild(this._app.view)
 		window.addEventListener("resize", this._onResize)
 
+		const points = Parser.parsePoints(svgXml)
+		this._shape = new CreatureShape(points, "circle")
+		this._app.stage.addChild(this._shape)
 	}
 
 	/**
 	 * 初期化
 	 */
 	public init(): void {
-
+		this._shape?.init()
 	}
 
 	/**
