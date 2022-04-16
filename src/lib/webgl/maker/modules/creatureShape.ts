@@ -32,9 +32,9 @@ export default class CreatureShape extends Container {
 		const pointsRect = new Vec2(300, 300)
 		const stageSize = new Vec2(300, 300)
 
-		const pointsNormalized = this._points.map(p => new Vec2(p.x / pointsRect.x, p.y / pointsRect.y))
-		for (let i = 0; i < pointsNormalized.length; i++) {
-			const p = pointsNormalized[i].multiply(stageSize)
+		const points = this._points.map(p => p.divide(pointsRect).multiply(stageSize))
+		for (let i = 0; i < points.length; i++) {
+			const p = points[i]
 			const g = new Graphics()
 			g.beginFill(0xfff000, 1)
 			g.drawCircle(p.x, p.y, 10, 10)
