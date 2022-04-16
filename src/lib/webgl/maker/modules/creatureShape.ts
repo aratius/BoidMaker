@@ -1,3 +1,5 @@
+import Points from "./points"
+
 const isClient = typeof window !== "undefined"
 const Container = isClient ? require("pixi.js").Container : class { }
 const Graphics = isClient ? require("pixi.js").Graphics : class { }
@@ -28,19 +30,14 @@ export default class CreatureShape extends Container {
 	 * 初期化
 	 */
 	public init(): void {
-		// TODO: ここ柔軟にする
+		// TODO: ここハードコードなので
 		const pointsRect = new Vec2(300, 300)
 		const stageSize = new Vec2(300, 300)
 
 		const points = this._points.map(p => p.divide(pointsRect).multiply(stageSize))
-		for (let i = 0; i < points.length; i++) {
-			const p = points[i]
-			const g = new Graphics()
-			g.beginFill(0xfff000, 1)
-			g.drawCircle(p.x, p.y, 10, 10)
-
-			this.addChild(g)
-		}
+		const p = new Points()
+		this.addChild(p)
+		p.update(points)
 	}
 
 	/**
