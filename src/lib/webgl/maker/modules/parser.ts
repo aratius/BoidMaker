@@ -14,11 +14,16 @@ export default class Parser {
 	public static parsePoints(svgStr: string): Vec2[] {
 		const parser = new DOMParser()
 		const xml = svgStr
-		console.log(xml);
-
 		const doc = parser.parseFromString(xml, "image/svg+xml")
-		console.log(doc);
+		const circles = doc.querySelectorAll("circle")
+		const points: Vec2[] = []
+		for (let i = 0; i < circles.length; i++) {
+			const c = circles[i]
+			const x = c.getAttribute("cx")
+			const y = c.getAttribute("cy")
+			points.push(new Vec2(Number(x), Number(y)))
+		}
 
-		return []
+		return points
 	}
 }
