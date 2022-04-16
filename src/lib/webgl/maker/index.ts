@@ -8,23 +8,29 @@ export default class MakerMain {
 
 	private _app?: typeof Application
 
+	/**
+	 * コンストラクタ
+	 * @param dom
+	 */
 	constructor(dom: HTMLElement) {
-		this._app = new Application({ width: innerWidth, height: innerHeight })
+		this._app = new Application({ resizeTo: dom })
 		dom.appendChild(this._app.view)
 		window.addEventListener("resize", this._onResize)
+
 	}
 
 	/**
 	 * 初期化
 	 */
 	public init(): void {
+
 	}
 
 	/**
 	 * リサイズ
 	 */
 	private _onResize(): void {
-		this._app?.renderer.resize(innerWidth, innerHeight)
+
 	}
 
 	/**

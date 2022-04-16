@@ -23,8 +23,9 @@ export default class Index extends Component {
 
 	public render(): ReactElement {
 		return (
-			<div ref={this._onRef}>
-
+			<div ref={this._onRef} style={{
+				height: "100vh"
+			}}>
 			</div>
 		);
 	}
