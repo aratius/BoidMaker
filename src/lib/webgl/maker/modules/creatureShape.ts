@@ -30,6 +30,8 @@ export default class CreatureShape extends Container {
 		super()
 		this.type = type
 		this._points = points
+
+		this.sortableChildren = true
 	}
 
 	/**
@@ -37,8 +39,11 @@ export default class CreatureShape extends Container {
 	 */
 	public init(): void {
 		this._p = new Points()
+		this._p.zIndex = 3
 		this._s = new Shape()
+		this._s.zIndex = 1
 		this._l = new Line()
+		this._l.zIndex = 2
 		this.addChild(this._p, this._s, this._l)
 
 		this.update()
