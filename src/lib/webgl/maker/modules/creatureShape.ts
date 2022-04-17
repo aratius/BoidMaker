@@ -111,6 +111,14 @@ export default class CreatureShape extends Container {
 	 * 再生（プレビューモードのみ）
 	 */
 	public play(): void {
+
+	}
+
+	/**
+	 * 停止(プレビューモードのみ)
+	 */
+	public stop(): void {
+
 	}
 
 	/**

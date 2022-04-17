@@ -3,7 +3,8 @@ import MakerMain from "src/lib/webgl/maker";
 
 interface State {
 	isEditing: boolean;
-	segmentRatio: number
+	isPlaying: boolean;
+	segmentRatio: number;
 }
 
 export default class Index extends PureComponent<{}, State> {
@@ -11,6 +12,7 @@ export default class Index extends PureComponent<{}, State> {
 	private _webgl?: MakerMain
 	public state: State = {
 		isEditing: true,
+		isPlaying: false,
 		segmentRatio: 2
 	};
 
@@ -19,8 +21,17 @@ export default class Index extends PureComponent<{}, State> {
 	}
 
 	componentDidUpdate(_: never, prevState: State): void {
-		if(this.state.isEditing != prevState.isEditing)
-			this.state.isEditing ? this._webgl?.edit() : this._webgl?.preview()
+		if(this.state.isEditing != prevState.isEditing) {
+			if(this.state.isEditing) {
+				this._webgl?.edit()
+				this.setState({ isPlaying: false })
+			} else {
+				this._webgl?.preview()
+			}
+		}
+
+		if(this.state.isPlaying != prevState.isPlaying)
+			this.state.isPlaying ? this._webgl?.play() : this._webgl?.stop()
 	}
 
 	private _onRef = (node: HTMLDivElement): void => {
@@ -34,9 +45,9 @@ export default class Index extends PureComponent<{}, State> {
 		this.setState({ isEditing: !this.state.isEditing })
 	}
 
-	private _play = (e: SyntheticEvent): void => {
+	private _togglePlayMode = (e: SyntheticEvent): void => {
 		if(e && e.cancelable) e.preventDefault()
-		if(!this.state.isEditing) this._webgl?.play()
+		if(!this.state.isEditing) this.setState({ isPlaying: !this.state.isPlaying })
 	}
 
 	private _divide = (e: SyntheticEvent): void => {
@@ -45,7 +56,7 @@ export default class Index extends PureComponent<{}, State> {
 	}
 
 	public render(): ReactElement {
-		const {isEditing} = this.state
+		const { isEditing, isPlaying } = this.state
 		const disableStyle = {opacity: 0.3}
 
 		return (
@@ -63,10 +74,10 @@ export default class Index extends PureComponent<{}, State> {
 				</a>
 				<a
 					href="#"
-					onClick={this._play}
+					onClick={this._togglePlayMode}
 					style={isEditing && disableStyle || {}}
 				>
-					play
+					{isPlaying ? "stop" : "play"}
 				</a>
 				<a
 					href="#"
