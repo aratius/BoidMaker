@@ -93,6 +93,7 @@ export default class CreatureShape extends Container {
 		this._p.visible = false;
 		this._l.visible = false;
 		this._s.visible = true;
+		this._grabPoints.forEach(g => g.interactive = false);
 	}
 
 	/**
@@ -103,6 +104,7 @@ export default class CreatureShape extends Container {
 		this._p.visible = true;
 		this._l.visible = true;
 		this._s.visible = true;
+		this._grabPoints.forEach(g => g.interactive = true);
 	}
 
 	/**
