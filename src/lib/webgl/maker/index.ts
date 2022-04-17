@@ -1,45 +1,72 @@
-import CreatureShape from "./modules/creatureShape"
-import Parser from "./modules/parser"
-import { svgXml } from "./modules/svg"
-const isClient = typeof window !== "undefined"
-const Application = isClient ? require("pixi.js").Application : class { }
+import CreatureShape from "./modules/creatureShape";
+import Parser from "./modules/parser";
+import { svgXml } from "./modules/svg";
+const isClient = typeof window !== "undefined";
+const Application = isClient ? require("pixi.js").Application : class { };
 
 /**
  * Makerのエントリーポイント
  */
 export default class MakerMain {
 
-	private _app?: typeof Application
-	private _shape?: CreatureShape
+	private _app?: typeof Application;
+	private _shape?: CreatureShape;
 
 	/**
 	 * コンストラクタ
 	 * @param dom
 	 */
 	constructor(dom: HTMLElement) {
-		this._app = new Application({ resizeTo: dom })
-		dom.appendChild(this._app.view)
-		window.addEventListener("resize", this._onResize)
+		this._app = new Application({ resizeTo: dom });
+		dom.appendChild(this._app.view);
 
-		const points = Parser.parsePoints(svgXml)
-		this._shape = new CreatureShape(points, "circle")
-		this._app.stage.addChild(this._shape)
+		const points = Parser.parsePoints(svgXml);
+		this._shape = new CreatureShape(points, "circle");
+		this._app.stage.addChild(this._shape);
 	}
 
 	/**
 	 * 初期化
 	 */
 	public init(): void {
-		this._shape?.init()
+		this._shape?.init();
 	}
 
 	/**
-	 * リサイズ
+	 * プレビューモード
 	 */
-	private _onResize(): void {
-
+	public preview(): void {
+		this._shape?.preview();
 	}
 
+	/**
+	 * 編集モード
+	 */
+	public edit(): void {
+		this._shape?.edit();
+	}
 
+	/**
+	 * 再生
+	 */
+	public play(): void {
+		this._shape?.play();
+	}
+
+	/**
+	 * 記録
+	 * @param num
+	 */
+	public record(num: number): void {
+		this._shape?.record(num);
+	}
+
+	/**
+	 * 分割
+	 * @param ratio
+	 */
+	public divide(ratio: number): void {
+		this._shape?.divide(ratio);
+	}
 
 }

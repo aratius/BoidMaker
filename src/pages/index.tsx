@@ -2,14 +2,17 @@ import { Component, ReactElement } from "react";
 import MakerMain from "src/lib/webgl/maker";
 
 interface Props { }
-interface State { }
+interface State {
+	isEditing: boolean
+}
 
 export default class Index extends Component {
 
-	public state: State = {};
+	public state: State = {
+		isEditing: false
+	};
 	constructor(props: Props) {
 		super(props);
-		this.state = {};
 	}
 
 	public componentDidMount(): void {
@@ -23,11 +26,16 @@ export default class Index extends Component {
 
 	public render(): ReactElement {
 		return (
-			<div ref={this._onRef} style={{
-				width: "300px",
-				height: "300px"
-			}}>
-			</div>
+			<main>
+
+				<div ref={this._onRef} style={{
+					width: "300px",
+					height: "300px"
+				}}>
+				</div>
+				<a href="">hoge</a>
+				<a href="">hoge</a>
+			</main>
 		);
 	}
 }
