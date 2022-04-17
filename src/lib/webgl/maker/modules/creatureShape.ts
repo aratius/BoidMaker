@@ -94,7 +94,7 @@ export default class CreatureShape extends Container {
 	 */
 	public play(): void {
 		if (this._playTimeline) this._playTimeline.kill();
-		const RANGE = 0.1;
+		const RANGE = 0.2;
 		this._playTimeline = gsap.timeline({ repeat: -1, onUpdate: this._updateByAngle });
 		this._playTimeline.to(this, { _angle: RANGE, duration: 0.3, ease: "power2.out" });
 		this._playTimeline.to(this, { _angle: -RANGE, duration: 0.6, ease: "power2.inOut" });
@@ -126,13 +126,19 @@ export default class CreatureShape extends Container {
 
 	/**
 	 * 分割数を変更（編集モードのみ）
-	 * @param mag 分割倍率 整数
+	 * @param mag 分割倍率 2の倍数である必要がある
 	 */
 	public divide(mag: number): void {
+		if (mag % 2 != 0 && mag != 1) {
+			console.error("mag is not multiplied of 2", mag);
+			return;
+		}
+
 		let points = this._pointsNormalized;
 		let magRelated = mag / this._segmentMag;
-		while (magRelated != 1) {
-			if (magRelated > 1) {
+
+		const increased = () => {
+			while (magRelated != 1) {
 				const inserted = points.map((p, i, arr) => {
 					const next = i < arr.length - 1 ? arr[i + 1] : arr[0];
 					const center = p.clone().add(next).divide(2);
@@ -144,11 +150,17 @@ export default class CreatureShape extends Container {
 				});
 				points = newPoints;
 				magRelated /= 2;
-			} else {
+			}
+		};
+
+		const descreased = () => {
+			while (magRelated != 1) {
 				points = points.filter((p, i) => i % 2 == 0);
 				magRelated *= 2;
 			}
-		}
+		};
+
+		magRelated > 1 ? increased() : descreased();
 
 		this._points = points;
 		this._segmentMag = mag;
