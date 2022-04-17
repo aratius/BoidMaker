@@ -79,7 +79,7 @@ export default class CreatureShape extends Container {
 		this._l?.update(points)
 		this._s?.update(points)
 
-		this._grabPoints.map((s, i) => {
+		this._grabPoints.forEach((s, i) => {
 			const p = this._points[i]
 			s.x = p.x
 			s.y = p.y
@@ -148,7 +148,7 @@ export default class CreatureShape extends Container {
 		let nearestI = -9999
 		let nearest = 9999
 
-		this._grabPoints.map((s, i) => {
+		this._grabPoints.forEach((s, i) => {
 			const dist = new Vec2(p.x - s.x, p.y - s.y).length()
 			if (dist < nearest) {
 				nearestI = i
