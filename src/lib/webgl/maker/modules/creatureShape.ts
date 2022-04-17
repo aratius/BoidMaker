@@ -62,7 +62,8 @@ export default class CreatureShape extends Container {
 			s.anchor.y = 0.5
 			s.interactive = true
 			this.addChild(s)
-			s.on("mousedown", this._onMouseDown)
+			s.on("mousedown", this._onDown)
+			s.on("touchstart", this._onDown)
 			return s
 		})
 
@@ -138,31 +139,12 @@ export default class CreatureShape extends Container {
 	}
 
 	/**
-	 * タッチスタート
+	 * マウス or タッチ押下
+	 * @param p
 	 */
-	private _onTouchStart(e: (typeof InteractionEvent)): void {
-
-	}
-
-	/**
-	 * タッチムーブ
-	 */
-	private _onTouchMove(e: (typeof InteractionEvent)): void {
-
-	}
-
-	/**
-	 * タッチエンド
-	 */
-	private _onTouchEnd(e: (typeof InteractionEvent)): void {
-
-	}
-
-	/**
-	 * マウスダウン
-	 */
-	private _onMouseDown = (e: (typeof InteractionEvent)): void => {
+	private _onDown = (e: (typeof InteractionEvent)): void => {
 		const p = e.data.getLocalPosition(this)
+
 		let nearestI = -9999
 		let nearest = 9999
 
@@ -176,15 +158,17 @@ export default class CreatureShape extends Container {
 
 		this._grabbingIndex = nearestI
 
-		// isFind
-		this.on("mousemove", this._onMouseMove)
-		this.on("mouseup", this._onMouseUp)
+		this.on("mousemove", this._onMove)
+		this.on("mouseup", this._onUp)
+		this.on("touchmove", this._onMove)
+		this.on("touchend", this._onUp)
 	}
 
 	/**
-	 * マウスムーブ
+	 * マウス or タッチ移動
+	 * @param p
 	 */
-	private _onMouseMove = (e: (typeof InteractionEvent)): void => {
+	private _onMove = (e: (typeof InteractionEvent)): void => {
 		if (this._grabbingIndex < 0 || this._grabbingIndex > this._grabPoints.length - 1) return
 
 		const p = e.data.getLocalPosition(this)
@@ -193,41 +177,16 @@ export default class CreatureShape extends Container {
 	}
 
 	/**
-	 * マウスアップ
-	 */
-	private _onMouseUp = (e: (typeof InteractionEvent)): void => {
-		const p = e.data.getLocalPosition(this)
-		console.log(p);
-
-		this._grabbingIndex = -999
-
-		this.off("mousemove", this._onMouseMove)
-		this.off("mouseup", this._onMouseUp)
-	}
-
-
-	/**
-	 * マウス or タッチ押下
-	 * @param p
-	 */
-	private _onDown(p: (typeof Vec2)): void {
-
-	}
-
-	/**
-	 * マウス or タッチ移動
-	 * @param p
-	 */
-	private _onMove(p: (typeof Vec2)): void {
-
-	}
-
-	/**
 	 * マウス or タッチ終了
 	 * @param p
 	 */
-	private _onUp(p: (typeof Vec2)): void {
+	private _onUp = (e: (typeof InteractionEvent)): void => {
+		this._grabbingIndex = -999
 
+		this.off("mousemove", this._onMove)
+		this.off("mouseup", this._onUp)
+		this.off("touchmove", this._onMove)
+		this.off("touchend", this._onUp)
 	}
 
 }
