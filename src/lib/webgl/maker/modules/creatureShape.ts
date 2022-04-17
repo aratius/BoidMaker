@@ -110,7 +110,7 @@ export default class CreatureShape extends Container {
 		const RANGE = 0.1;
 		const v = { v: -RANGE };
 		this._playTween = gsap.to(v, {
-			v: RANGE, duration: 2, ease: "linear", repeat: -1, yoyo: true, onUpdate: () => {
+			v: RANGE, duration: 1, ease: "linear", repeat: -1, yoyo: true, onUpdate: () => {
 				this._updateByAngle(v.v);
 			}
 		});
@@ -162,14 +162,16 @@ export default class CreatureShape extends Container {
 	private _updateByAngle(angle: number): void {
 		const points = this._pointsNormalized;
 		const center = POINTS_RECT.clone().divide(2);
+		const rotateCenter = new Vec2(150, 200);
 
 		this._update(
 			points.map(p => {
-				const pBasedCenter = p.clone().subtract(center);
+				const pBasedCenter = p.clone().subtract(rotateCenter);
 				const polarAngle = Math.atan2(pBasedCenter.x, pBasedCenter.y);
-				const a = polarAngle + angle;
-				const dist = p.distance(center);
-				return new Vec2(Math.sin(a), Math.cos(a)).multiply(dist).add(center);
+				let a = polarAngle + angle;
+				if (pBasedCenter.y > 0) a = polarAngle - angle;
+				const dist = p.distance(rotateCenter);
+				return new Vec2(Math.sin(a), Math.cos(a)).multiply(dist).add(rotateCenter);
 			})
 		);
 	}
