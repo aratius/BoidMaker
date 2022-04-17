@@ -110,9 +110,9 @@ export default class CreatureShape extends Container {
 		if (this._playTimeline) this._playTimeline.kill();
 		const RANGE = 0.1;
 		this._playTimeline = gsap.timeline({ repeat: -1, onUpdate: this._updateByAngle });
-		this._playTimeline.to(this, { _angle: RANGE, duration: 0.5, ease: "power2.out" });
-		this._playTimeline.to(this, { _angle: -RANGE, duration: 1, ease: "power2.inOut" });
-		this._playTimeline.to(this, { _angle: 0, duration: 0.5, ease: "power2.in" });
+		this._playTimeline.to(this, { _angle: RANGE, duration: 0.3, ease: "power2.out" });
+		this._playTimeline.to(this, { _angle: -RANGE, duration: 0.6, ease: "power2.inOut" });
+		this._playTimeline.to(this, { _angle: 0, duration: 0.3, ease: "power2.in" });
 	}
 
 	/**
