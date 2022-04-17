@@ -27,7 +27,7 @@ export default class CreatureShape extends Container {
 	private _s?: (typeof Graphics);  // 形
 	private _l?: (typeof Graphics);  // 線
 	private _grabbingIndex: number = -999;
-	private _segmentRatio: number = 2;  // 分割数の倍率
+	private _segmentMag: number = 2;  // 分割数の倍率
 	private _angle: number = 0;
 	private _playTimeline?: GSAPTimeline;
 
@@ -63,21 +63,7 @@ export default class CreatureShape extends Container {
 		this._s.zIndex = 1;
 		this.addChild(this._p, this._s, this._l);
 
-		this._grabPoints = this._points.map(_ => {
-			const s = new Sprite(Texture.WHITE);
-			s.width = 20;
-			s.height = 20;
-			s.zIndex = 4;
-			s.anchor.x = 0.5;
-			s.anchor.y = 0.5;
-			s.alpha = 0;  // 掴むための目印なのでalphaは0
-			s.interactive = true;
-			this.addChild(s);
-			s.on("mousedown", this._onDown);
-			s.on("touchstart", this._onDown);
-			return s;
-		});
-
+		this._setGrabPoints();
 		this._update(this._pointsNormalized);
 	}
 
@@ -140,10 +126,34 @@ export default class CreatureShape extends Container {
 
 	/**
 	 * 分割数を変更（編集モードのみ）
-	 * @param ratio 1 ~ 4の整数
+	 * @param mag 分割倍率 整数
 	 */
-	public divide(ratio: number): void {
+	public divide(mag: number): void {
+		let points = this._pointsNormalized;
+		let magRelated = mag / this._segmentMag;
+		while (magRelated != 1) {
+			if (magRelated > 1) {
+				const inserted = points.map((p, i, arr) => {
+					const next = i < arr.length - 1 ? arr[i + 1] : arr[0];
+					const center = p.clone().add(next).divide(2);
+					return center;
+				});
+				const newPoints: (typeof Vec2) = [];
+				points.forEach((p, i) => {
+					newPoints.push(p, inserted[i]);
+				});
+				points = newPoints;
+				magRelated /= 2;
+			} else {
+				points = points.filter((p, i) => i % 2 == 0);
+				magRelated *= 2;
+			}
+		}
 
+		this._points = points;
+		this._segmentMag = mag;
+		this._setGrabPoints();
+		this._update(this._pointsNormalized);
 	}
 
 	/**
@@ -179,6 +189,32 @@ export default class CreatureShape extends Container {
 			})
 		);
 	};
+
+	/**
+	 * グラブポイントをセットする
+	 * リセット処理含む
+	 */
+	private _setGrabPoints(): void {
+		this._grabPoints.forEach(s => {
+			s.off("mousedown", this._onDown);
+			s.off("touchstart", this._onDown);
+		});
+
+		this._grabPoints = this._points.map(_ => {
+			const s = new Sprite(Texture.WHITE);
+			s.width = 20;
+			s.height = 20;
+			s.zIndex = 4;
+			s.anchor.x = 0.5;
+			s.anchor.y = 0.5;
+			s.alpha = 0;  // 掴むための目印なのでalphaは0
+			s.interactive = true;
+			this.addChild(s);
+			s.on("mousedown", this._onDown);
+			s.on("touchstart", this._onDown);
+			return s;
+		});
+	}
 
 	/**
 	 * マウス or タッチ押下

@@ -32,6 +32,9 @@ export default class Index extends PureComponent<{}, State> {
 
 		if(this.state.isPlaying != prevState.isPlaying)
 			this.state.isPlaying ? this._webgl?.play() : this._webgl?.stop()
+
+		if(this.state.segmentRatio != prevState.segmentRatio)
+			this._webgl?.divide(this.state.segmentRatio)
 	}
 
 	private _onRef = (node: HTMLDivElement): void => {
@@ -52,7 +55,8 @@ export default class Index extends PureComponent<{}, State> {
 
 	private _divide = (e: SyntheticEvent): void => {
 		if(e && e.cancelable) e.preventDefault()
-		if(this.state.isEditing) this._webgl?.divide(this.state.segmentRatio)
+		const segmentRatio = this.state.segmentRatio == 4 ? 1 : this.state.segmentRatio * 2
+		if(this.state.isEditing) this.setState({ segmentRatio })
 	}
 
 	public render(): ReactElement {
