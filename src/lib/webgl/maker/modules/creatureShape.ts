@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import Line from "./line";
 import Points from "./points";
 import Shape from "./shape";
@@ -10,6 +11,9 @@ const Sprite = isClient ? require("pixi.js").Sprite : class { };
 const Texture = isClient ? require("pixi.js").Texture : class { };
 const InteractionEvent = isClient ? require("pixi.js").InteractionEvent : class { };
 const Vec2 = isClient ? require("vec2") : class { };
+
+// アートボードサイズ
+const POINTS_RECT = new Vec2(300, 300);
 
 /**
  * 生物の形
@@ -24,6 +28,13 @@ export default class CreatureShape extends Container {
 	private _l?: (typeof Graphics);  // 線
 	private _grabbingIndex: number = -999;
 	private _segmentRatio: number = 2;  // 分割数の倍率
+	private _playTween?: GSAPTween;
+
+	private get _pointsNormalized(): (typeof Vec2)[] {
+		// TODO: ここハードコードなので
+		const stageSize = new Vec2(300, 300);
+		return this._points.map(p => p.divide(POINTS_RECT).multiply(stageSize));
+	}
 
 	/**
 	 *
@@ -66,23 +77,7 @@ export default class CreatureShape extends Container {
 			return s;
 		});
 
-		this.update();
-	}
-
-	public update(): void {
-		// TODO: ここハードコードなので
-		const pointsRect = new Vec2(300, 300);
-		const stageSize = new Vec2(300, 300);
-		const points = this._points.map(p => p.divide(pointsRect).multiply(stageSize));
-		this._p?.update(points);
-		this._l?.update(points);
-		this._s?.update(points);
-
-		this._grabPoints.forEach((s, i) => {
-			const p = this._points[i];
-			s.x = p.x;
-			s.y = p.y;
-		});
+		this._update(this._pointsNormalized);
 	}
 
 	/**
@@ -111,14 +106,22 @@ export default class CreatureShape extends Container {
 	 * 再生（プレビューモードのみ）
 	 */
 	public play(): void {
-
+		if (this._playTween) this._playTween.kill();
+		const RANGE = 0.1;
+		const v = { v: -RANGE };
+		this._playTween = gsap.to(v, {
+			v: RANGE, duration: 2, ease: "linear", repeat: -1, yoyo: true, onUpdate: () => {
+				this._updateByAngle(v.v);
+			}
+		});
 	}
 
 	/**
 	 * 停止(プレビューモードのみ)
 	 */
 	public stop(): void {
-
+		if (this._playTween) this._playTween.kill();
+		this._update(this._pointsNormalized);
 	}
 
 	/**
@@ -135,6 +138,40 @@ export default class CreatureShape extends Container {
 	 * @param ratio 1 ~ 4の整数
 	 */
 	public divide(ratio: number): void {
+	}
+
+	/**
+	 * 更新
+	 */
+	private _update(points: (typeof Vec2)[]): void {
+		this._p?.update(points);
+		this._l?.update(points);
+		this._s?.update(points);
+
+		this._grabPoints.forEach((s, i) => {
+			const p = this._points[i];
+			s.x = p.x;
+			s.y = p.y;
+		});
+	}
+
+	/**
+	 * 角度指定で更新（play時）
+	 * @param angle
+	 */
+	private _updateByAngle(angle: number): void {
+		const points = this._pointsNormalized;
+		const center = POINTS_RECT.clone().divide(2);
+
+		this._update(
+			points.map(p => {
+				const pBasedCenter = p.clone().subtract(center);
+				const polarAngle = Math.atan2(pBasedCenter.x, pBasedCenter.y);
+				const a = polarAngle + angle;
+				const dist = p.distance(center);
+				return new Vec2(Math.sin(a), Math.cos(a)).multiply(dist).add(center);
+			})
+		);
 	}
 
 	/**
@@ -172,7 +209,7 @@ export default class CreatureShape extends Container {
 
 		const p = e.data.getLocalPosition(this);
 		this._points[this._grabbingIndex] = new Vec2(p.x, p.y);
-		this.update();
+		this._update(this._pointsNormalized);
 	};
 
 	/**
