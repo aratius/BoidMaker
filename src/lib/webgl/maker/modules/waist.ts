@@ -35,12 +35,6 @@ export default class Waist extends Sprite {
 		this._update(new Vec2(150, 150));
 	}
 
-	private _update(p: (typeof Vec2)): void {
-		this.x = p.x;
-		this.y = p.y;
-
-	}
-
 	private _onDown = (e: (typeof InteractionEvent)): void => {
 		this._parent.on("mousemove", this._onMove);
 		this._parent.on("touchmove", this._onMove);
@@ -59,5 +53,10 @@ export default class Waist extends Sprite {
 		this._parent.off("mouseend", this._onUp);
 		this._parent.off("touchend", this._onUp);
 	};
+
+	private _update(p: (typeof Vec2)): void {
+		this.x = p.x;
+		this.y = p.y;
+	}
 
 }
