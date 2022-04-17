@@ -16,6 +16,7 @@ export default class Points extends Graphics {
 	 * @param points
 	 */
 	public update(points: (typeof Vec2)[]): void {
+		this.clear()
 		this.beginFill(0xfff000, 1)
 		for (let i = 0; i < points.length; i++) {
 			const p = points[i]

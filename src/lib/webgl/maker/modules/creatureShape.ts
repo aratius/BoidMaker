@@ -6,6 +6,8 @@ import Shape from "./shape"
 const isClient = typeof window !== "undefined"
 const Container = isClient ? require("pixi.js").Container : class { }
 const Graphics = isClient ? require("pixi.js").Graphics : class { }
+const Sprite = isClient ? require("pixi.js").Sprite : class { }
+const Texture = isClient ? require("pixi.js").Texture : class { }
 const InteractionEvent = isClient ? require("pixi.js").InteractionEvent : class { }
 const Vec2 = isClient ? require("vec2") : undefined
 
@@ -16,10 +18,11 @@ export default class CreatureShape extends Container {
 
 	public type: string = "not definced"
 	private _points: (typeof Vec2)[] = []  // 頂点情報の配列
-	private _grabPoints: (typeof Graphics)[] = []
+	private _grabPoints: (typeof Sprite)[] = []
 	private _p?: (typeof Graphics)
 	private _s?: (typeof Graphics)
 	private _l?: (typeof Graphics)
+	private _grabbingIndex: number = -999
 	private _segmentRatio: number = 2  // 分割数の倍率
 	private _isEditing: boolean = false  // 編集モードかどうか, falseならプレビューモード
 
@@ -49,16 +52,18 @@ export default class CreatureShape extends Container {
 		this._s.zIndex = 1
 		this.addChild(this._p, this._s, this._l)
 
+		const texture = Texture.from("circle.png")
 		this._grabPoints = this._points.map(_ => {
-			const g = new Graphics()
-			// 本番は見えないようにする
-			g.beginFill(0x00ff00, 1)
-			g.interactive = true
-			this.addChild(g)
-
-			g.on("mousedown", this._onMouseDown)
-
-			return g
+			const s = new Sprite(texture)
+			s.width = 10
+			s.height = 10
+			s.zIndex = 4
+			s.anchor.x = 0.5
+			s.anchor.y = 0.5
+			s.interactive = true
+			this.addChild(s)
+			s.on("mousedown", this._onMouseDown)
+			return s
 		})
 
 		this.update()
@@ -73,9 +78,10 @@ export default class CreatureShape extends Container {
 		this._l?.update(points)
 		this._s?.update(points)
 
-		this._grabPoints.map((g, i) => {
+		this._grabPoints.map((s, i) => {
 			const p = this._points[i]
-			g.drawCircle(p.x, p.y, 10, 10)
+			s.x = p.x
+			s.y = p.y
 		})
 	}
 
@@ -157,6 +163,19 @@ export default class CreatureShape extends Container {
 	 */
 	private _onMouseDown = (e: (typeof InteractionEvent)): void => {
 		const p = e.data.getLocalPosition(this)
+		let nearestI = -9999
+		let nearest = 9999
+
+		this._grabPoints.map((s, i) => {
+			const dist = new Vec2(p.x - s.x, p.y - s.y).length()
+			if (dist < nearest) {
+				nearestI = i
+				nearest = dist
+			}
+		})
+
+		this._grabbingIndex = nearestI
+
 		// isFind
 		this.on("mousemove", this._onMouseMove)
 		this.on("mouseup", this._onMouseUp)
@@ -166,7 +185,11 @@ export default class CreatureShape extends Container {
 	 * マウスムーブ
 	 */
 	private _onMouseMove = (e: (typeof InteractionEvent)): void => {
+		if (this._grabbingIndex < 0 || this._grabbingIndex > this._grabPoints.length - 1) return
+
 		const p = e.data.getLocalPosition(this)
+		this._points[this._grabbingIndex] = new Vec2(p.x, p.y)
+		this.update()
 	}
 
 	/**
@@ -174,6 +197,9 @@ export default class CreatureShape extends Container {
 	 */
 	private _onMouseUp = (e: (typeof InteractionEvent)): void => {
 		const p = e.data.getLocalPosition(this)
+		console.log(p);
+
+		this._grabbingIndex = -999
 
 		this.off("mousemove", this._onMouseMove)
 		this.off("mouseup", this._onMouseUp)
