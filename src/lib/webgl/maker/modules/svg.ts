@@ -1,4 +1,4 @@
-export const svgXml = `
+export const CIRCLE = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 294.87">
 <g id="a"/>
 <g id="b">
@@ -25,4 +25,4 @@ export const svgXml = `
 </g>
 </g>
 </g>
-</svg>`
+</svg>`;

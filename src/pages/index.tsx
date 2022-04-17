@@ -14,7 +14,7 @@ export default class Index extends PureComponent<{}, State> {
 		segmentRatio: 2
 	};
 
-	public componentDidMount(): void {
+	componentDidMount(): void {
 		this.state.isEditing ? this._webgl?.edit() : this._webgl?.preview()
 	}
 

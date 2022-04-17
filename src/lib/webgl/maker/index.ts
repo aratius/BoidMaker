@@ -1,6 +1,6 @@
 import CreatureShape from "./modules/creatureShape";
 import Parser from "./modules/parser";
-import { svgXml } from "./modules/svg";
+import { CIRCLE } from "./modules/svg";
 const isClient = typeof window !== "undefined";
 const Application = isClient ? require("pixi.js").Application : class { };
 
@@ -20,7 +20,7 @@ export default class MakerMain {
 		this._app = new Application({ resizeTo: dom });
 		dom.appendChild(this._app.view);
 
-		const points = Parser.parsePoints(svgXml);
+		const points = Parser.parsePoints(CIRCLE);
 		this._shape = new CreatureShape(points, "circle");
 		this._app.stage.addChild(this._shape);
 	}
