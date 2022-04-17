@@ -52,14 +52,14 @@ export default class CreatureShape extends Container {
 		this._s.zIndex = 1
 		this.addChild(this._p, this._s, this._l)
 
-		const texture = Texture.from("circle.png")
 		this._grabPoints = this._points.map(_ => {
-			const s = new Sprite(texture)
-			s.width = 10
-			s.height = 10
+			const s = new Sprite(Texture.WHITE)
+			s.width = 20
+			s.height = 20
 			s.zIndex = 4
 			s.anchor.x = 0.5
 			s.anchor.y = 0.5
+			s.alpha = 0  // 掴むための目印なのでalphaは0
 			s.interactive = true
 			this.addChild(s)
 			s.on("mousedown", this._onDown)
