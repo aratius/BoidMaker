@@ -2,8 +2,9 @@ import gsap from "gsap";
 import Line from "./line";
 import Points from "./points";
 import Shape from "./shape";
+import Waist from "./waist";
 
-// pixi.js modules
+// external modules
 const isClient = typeof window !== "undefined";
 const Container = isClient ? require("pixi.js").Container : class { };
 const Graphics = isClient ? require("pixi.js").Graphics : class { };
@@ -20,12 +21,13 @@ const POINTS_RECT = new Vec2(300, 300);
  */
 export default class CreatureShape extends Container {
 
-	public type: string = "not definced";
+	public type: string = "not defined";
 	private _points: (typeof Vec2)[] = [];  // 頂点情報の配列
 	private _grabPoints: (typeof Sprite)[] = [];
 	private _p?: (typeof Graphics);  // 頂点
 	private _s?: (typeof Graphics);  // 形
 	private _l?: (typeof Graphics);  // 線
+	private _waist?: (typeof Graphics);
 	private _grabbingIndex: number = -999;
 	private _segmentMag: number = 2;  // 分割数の倍率
 	private _angle: number = 0;
@@ -58,10 +60,12 @@ export default class CreatureShape extends Container {
 		this._p = new Points();
 		this._l = new Line();
 		this._s = new Shape();
+		this._waist = new Waist(this);
 		this._p.zIndex = 3;
 		this._l.zIndex = 2;
 		this._s.zIndex = 1;
-		this.addChild(this._p, this._s, this._l);
+		this._waist.zIndex = 4;
+		this.addChild(this._p, this._s, this._l, this._waist);
 
 		this._setGrabPoints();
 		this._update(this._pointsNormalized);
@@ -75,6 +79,7 @@ export default class CreatureShape extends Container {
 		this._p.visible = false;
 		this._l.visible = false;
 		this._s.visible = true;
+		this._waist.visible = false;
 		this._grabPoints.forEach(g => g.interactive = false);
 	}
 
@@ -86,6 +91,7 @@ export default class CreatureShape extends Container {
 		this._p.visible = true;
 		this._l.visible = true;
 		this._s.visible = true;
+		this._waist.visible = true;
 		this._grabPoints.forEach(g => g.interactive = true);
 	}
 
@@ -189,7 +195,7 @@ export default class CreatureShape extends Container {
 	 */
 	private _updateByAngle = (): void => {
 		const points = this._pointsNormalized;
-		const rotateCenter = new Vec2(150, 200);
+		const rotateCenter = new Vec2(this._waist.x, this._waist.y);
 
 		this._update(
 			points.map(p => {
