@@ -143,6 +143,7 @@ export default class CreatureShape extends Container {
 	 * @param ratio 1 ~ 4の整数
 	 */
 	public divide(ratio: number): void {
+
 	}
 
 	/**
@@ -166,7 +167,6 @@ export default class CreatureShape extends Container {
 	 */
 	private _updateByAngle = (): void => {
 		const points = this._pointsNormalized;
-		const center = POINTS_RECT.clone().divide(2);
 		const rotateCenter = new Vec2(150, 200);
 
 		this._update(
@@ -187,9 +187,9 @@ export default class CreatureShape extends Container {
 	private _onDown = (e: (typeof InteractionEvent)): void => {
 		const p = e.data.getLocalPosition(this);
 
-		let nearestI = -9999;
+		// 掴んだやつのindexを検出
+		let nearestI = -999;
 		let nearest = 9999;
-
 		this._grabPoints.forEach((s, i) => {
 			const dist = new Vec2(p.x - s.x, p.y - s.y).length();
 			if (dist < nearest) {
@@ -197,7 +197,6 @@ export default class CreatureShape extends Container {
 				nearest = dist;
 			}
 		});
-
 		this._grabbingIndex = nearestI;
 
 		this.on("mousemove", this._onMove);
@@ -214,7 +213,7 @@ export default class CreatureShape extends Container {
 		if (this._grabbingIndex < 0 || this._grabbingIndex > this._grabPoints.length - 1) return;
 
 		const p = e.data.getLocalPosition(this);
-		this._points[this._grabbingIndex] = new Vec2(p.x, p.y);
+		this._points[this._grabbingIndex] = new Vec2(p.x, p.y);  // this._pointsを上書き _pointsを上書きできるのはここだけ
 		this._update(this._pointsNormalized);
 	};
 
