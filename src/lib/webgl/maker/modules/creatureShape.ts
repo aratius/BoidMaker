@@ -28,7 +28,8 @@ export default class CreatureShape extends Container {
 	private _l?: (typeof Graphics);  // 線
 	private _grabbingIndex: number = -999;
 	private _segmentRatio: number = 2;  // 分割数の倍率
-	private _playTween?: GSAPTween;
+	private _angle: number = 0;
+	private _playTimeline?: GSAPTimeline;
 
 	private get _pointsNormalized(): (typeof Vec2)[] {
 		// TODO: ここハードコードなので
@@ -106,22 +107,26 @@ export default class CreatureShape extends Container {
 	 * 再生（プレビューモードのみ）
 	 */
 	public play(): void {
-		if (this._playTween) this._playTween.kill();
+		if (this._playTimeline) this._playTimeline.kill();
 		const RANGE = 0.1;
-		const v = { v: -RANGE };
-		this._playTween = gsap.to(v, {
-			v: RANGE, duration: 1, ease: "linear", repeat: -1, yoyo: true, onUpdate: () => {
-				this._updateByAngle(v.v);
-			}
-		});
+		this._playTimeline = gsap.timeline({ repeat: -1, onUpdate: this._updateByAngle });
+		this._playTimeline.to(this, { _angle: RANGE, duration: 0.5, ease: "power2.out" });
+		this._playTimeline.to(this, { _angle: -RANGE, duration: 1, ease: "power2.inOut" });
+		this._playTimeline.to(this, { _angle: 0, duration: 0.5, ease: "power2.in" });
 	}
 
 	/**
 	 * 停止(プレビューモードのみ)
 	 */
 	public stop(): void {
-		if (this._playTween) this._playTween.kill();
-		this._update(this._pointsNormalized);
+		if (this._playTimeline) this._playTimeline.kill();
+		this._playTimeline = gsap.timeline();
+		this._playTimeline.to(this, {
+			_angle: 0,
+			duration: 0.2,
+			ease: "expo.out",
+			onUpdate: this._updateByAngle
+		});
 	}
 
 	/**
@@ -159,7 +164,7 @@ export default class CreatureShape extends Container {
 	 * 角度指定で更新（play時）
 	 * @param angle
 	 */
-	private _updateByAngle(angle: number): void {
+	private _updateByAngle = (): void => {
 		const points = this._pointsNormalized;
 		const center = POINTS_RECT.clone().divide(2);
 		const rotateCenter = new Vec2(150, 200);
@@ -168,12 +173,12 @@ export default class CreatureShape extends Container {
 			points.map(p => {
 				const pBasedCenter = p.clone().subtract(rotateCenter);
 				const polarAngle = Math.atan2(pBasedCenter.x, pBasedCenter.y);
-				let a = polarAngle + angle * Math.sign(pBasedCenter.y);
+				let a = polarAngle + this._angle * Math.sign(pBasedCenter.y);
 				const dist = p.distance(rotateCenter);
 				return new Vec2(Math.sin(a), Math.cos(a)).multiply(dist).add(rotateCenter);
 			})
 		);
-	}
+	};
 
 	/**
 	 * マウス or タッチ押下
