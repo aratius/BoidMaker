@@ -123,8 +123,8 @@ export default class CreatureShape extends Container {
 		this._playTimeline = gsap.timeline();
 		this._playTimeline.to(this, {
 			_angle: 0,
-			duration: 0.2,
-			ease: "expo.out",
+			duration: 0.7,
+			ease: "elastic.out",
 			onUpdate: this._updateByAngle
 		});
 	}
