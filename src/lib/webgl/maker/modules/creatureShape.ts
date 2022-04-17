@@ -168,8 +168,7 @@ export default class CreatureShape extends Container {
 			points.map(p => {
 				const pBasedCenter = p.clone().subtract(rotateCenter);
 				const polarAngle = Math.atan2(pBasedCenter.x, pBasedCenter.y);
-				let a = polarAngle + angle;
-				if (pBasedCenter.y > 0) a = polarAngle - angle;
+				let a = polarAngle + angle * Math.sign(pBasedCenter.y);
 				const dist = p.distance(rotateCenter);
 				return new Vec2(Math.sin(a), Math.cos(a)).multiply(dist).add(rotateCenter);
 			})
