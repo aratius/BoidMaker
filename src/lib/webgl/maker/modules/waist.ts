@@ -26,10 +26,11 @@ export default class Waist extends Sprite {
 		this.anchor.x = 0.5;
 		this.anchor.y = 0.5;
 		this.alpha = 1;
+		this.tint = 0x000000;
 		this.interactive = true;
 
-		this._parent.on("mousedown", this._onDown);
-		this._parent.on("touchstart", this._onDown);
+		this.on("mousedown", this._onDown);
+		this.on("touchstart", this._onDown);
 
 		this._update(new Vec2(150, 150));
 	}
