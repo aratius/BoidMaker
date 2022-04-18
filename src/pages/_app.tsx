@@ -2,7 +2,7 @@ import "src/styles/app.scss";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 
-export default ({ Component, pageProps }: AppProps) => (
+const App = ({ Component, pageProps }: AppProps) => (
 	<>
 		<Head>
 			<meta
@@ -13,3 +13,5 @@ export default ({ Component, pageProps }: AppProps) => (
 		<Component {...pageProps} />
 	</>
 );
+
+export default App
