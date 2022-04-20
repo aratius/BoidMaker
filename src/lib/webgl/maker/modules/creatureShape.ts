@@ -195,15 +195,16 @@ export default class CreatureShape extends Container {
 	 */
 	private _updateByAngle = (): void => {
 		const points = this._pointsNormalized;
-		const rotateCenter = new Vec2(this._waist.x, this._waist.y);
+		const waistPos = new Vec2(this._waist.x, this._waist.y);
 
 		this._update(
 			points.map(p => {
-				const pBasedCenter = p.clone().subtract(rotateCenter);
-				const polarAngle = Math.atan2(pBasedCenter.x, pBasedCenter.y);
-				let a = polarAngle + this._angle * Math.sign(pBasedCenter.y);
-				const dist = p.distance(rotateCenter);
-				return new Vec2(Math.sin(a), Math.cos(a)).multiply(dist).add(rotateCenter);
+				const pBasedWaist = p.clone().subtract(waistPos);
+				const polarAngle = Math.atan2(pBasedWaist.x, pBasedWaist.y);
+				const dist = p.distance(waistPos);
+				const farBias = Math.pow(dist / 150, 3); // 遠い頂点は大きく動かすとダイナミックになる　そのバイアス
+				let a = polarAngle + this._angle * Math.sign(pBasedWaist.y) * farBias;
+				return new Vec2(Math.sin(a), Math.cos(a)).multiply(dist).add(waistPos);
 			})
 		);
 	};

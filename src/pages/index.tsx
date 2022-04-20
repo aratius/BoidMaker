@@ -21,6 +21,7 @@ export default class Index extends PureComponent<{}, State> {
 	}
 
 	componentDidUpdate(_: never, prevState: State): void {
+		// 編集中ステートが変わったとき
 		if(this.state.isEditing != prevState.isEditing) {
 			if(this.state.isEditing) {
 				this._webgl?.edit()
@@ -30,29 +31,48 @@ export default class Index extends PureComponent<{}, State> {
 			}
 		}
 
+		// 再生中ステートが変わったとき
 		if(this.state.isPlaying != prevState.isPlaying)
 			this.state.isPlaying ? this._webgl?.play() : this._webgl?.stop()
 
+		// 分割数ステートが変わったとき
 		if(this.state.segmentRatio != prevState.segmentRatio)
 			this._webgl?.divide(this.state.segmentRatio)
 	}
 
+	/**
+	 * canvasラッパーのref
+	 * @param node
+	 * @returns
+	 */
 	private _onRef = (node: HTMLDivElement): void => {
 		if(!node) return
 		this._webgl = new MakerMain(node)
 		this._webgl.init()
 	}
 
+	/**
+	 * 編集<->プレビューモード切替
+	 * @param e
+	 */
 	private _toggleMode = (e: SyntheticEvent): void => {
 		if(e && e.cancelable) e.preventDefault()
 		this.setState({ isEditing: !this.state.isEditing })
 	}
 
+	/**
+	 * 再生<->停止モード切替
+	 * @param e
+	 */
 	private _togglePlayMode = (e: SyntheticEvent): void => {
 		if(e && e.cancelable) e.preventDefault()
 		if(!this.state.isEditing) this.setState({ isPlaying: !this.state.isPlaying })
 	}
 
+	/**
+	 * 分割数変更
+	 * @param e
+	 */
 	private _divide = (e: SyntheticEvent): void => {
 		if(e && e.cancelable) e.preventDefault()
 		const segmentRatio = this.state.segmentRatio == 4 ? 1 : this.state.segmentRatio * 2
