@@ -8,19 +8,29 @@
 	// ツールバー
 	.toolbar {
 		width: auto;
-		height: 50px;
+		height: 80px;
+		padding-left: 10px;
+		padding-right: 10px;
 		position: absolute;
 		top: 0;
 		display: flex;
 		border: 1px solid #ededed;
+		border-radius: 0 0 20px 20px;
 
 		li {
-			padding: 10px;
+			padding: 20px;
+
+			a {
+				img {
+					height: 100%;
+				}
+			}
 		}
 	}
 
 	// メインのエディタ画面
 	.editor {
+		margin-bottom: 30px;
 		border: 1px solid #ededed;
 
 		// play btn
@@ -30,13 +40,21 @@
 
 	// ページャー
 	.pager {
-		display: flex;
-		li {
-			padding-left: 5px;
-			padding-right: 5px;
+		overflow: visible;
 
-			a {
-				// text-align: center;
+		ul {
+			display: flex;
+			flex-wrap: nowrap;
+			width: 70px;
+
+			li {
+				width: 70px;
+				text-align: center;
+				// padding-left: 5px;
+				// padding-right: 5px;
+
+				a {
+				}
 			}
 		}
 	}

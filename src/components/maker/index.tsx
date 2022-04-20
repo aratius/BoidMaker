@@ -12,7 +12,12 @@ export default class Index extends PureComponent<{}, {}> {
 	public render(): ReactElement {
 		return (
 			<main className={styles.container}>
-				<ToolBar />
+				<ToolBar
+					mode="edit"
+					onDivide={(segment: number) => {}}
+					onHelp={() => {}}
+					onReset={() => {}}
+				/>
 				<Editor />
 				<Pager />
 			</main>
