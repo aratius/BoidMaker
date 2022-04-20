@@ -1,5 +1,5 @@
 import { PureComponent, ReactElement } from "react";
-import Index from "src/components/editor";
+import Index from "src/components/maker";
 
 interface State {
 	isEditing: boolean;
