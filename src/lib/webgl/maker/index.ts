@@ -17,7 +17,7 @@ export default class MakerMain {
 	 * @param dom
 	 */
 	constructor(dom: HTMLElement) {
-		this._app = new Application({ resizeTo: dom });
+		this._app = new Application({ resizeTo: dom, transparent: true });
 		dom.appendChild(this._app.view);
 
 		const points = Parser.parsePoints(FISH);

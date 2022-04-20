@@ -17,7 +17,8 @@ export default class Points extends Graphics {
 	 */
 	public update(points: (typeof Vec2)[]): void {
 		this.clear();
-		this.beginFill(0xfff000, 1);
+		this.beginFill(0x000000, 0.3);
+		this.lineStyle(1, 0xffffff, 0.3);
 		for (let i = 0; i < points.length; i++) {
 			const p = points[i];
 			this.drawCircle(p.x, p.y, 5, 5);
