@@ -54,6 +54,9 @@
 			bottom: 10px;
 			right: 10px;
 			background: url(/images/editor/play_bl.svg);
+			&.is_stop {
+				background: url(/images/editor/stop_bl.svg);
+			}
 		}
 	}
 

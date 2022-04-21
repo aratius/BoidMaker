@@ -63,7 +63,7 @@ export default class Index extends PureComponent<{}, State> {
 					onHelp={this._onHelp}
 					onReset={this._onReset}
 				/>
-				<Editor />
+				<Editor isPreviewMode={modeIndex == 1} />
 				<Pager
 					onChangeMode={this._onChangeMode}
 				/>
