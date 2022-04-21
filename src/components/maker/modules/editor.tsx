@@ -49,6 +49,10 @@ export default class Editor extends PureComponent<Props, State> {
 		}
 	}
 
+	public reset(): void {
+
+	}
+
 	private _togglePlayMode = (): void => {
 		this.setState({ isPlaying: !this.state.isPlaying })
 	}
@@ -59,8 +63,7 @@ export default class Editor extends PureComponent<Props, State> {
 
 	private _edit(): void {
 		this._webgl?.edit()
-		const { isPlaying } = this.state
-		isPlaying && this._stop()
+		this.setState({ isPlaying: false })
 	}
 
 	private _preview(): void {
@@ -68,7 +71,8 @@ export default class Editor extends PureComponent<Props, State> {
 	}
 
 	private _upload(): void {
-		// this._webgl.up
+		this._webgl?.upload()
+		this.setState({ isPlaying: false })
 	}
 
 	private _play(): void {

@@ -47,6 +47,13 @@ export default class MakerMain {
 	}
 
 	/**
+	 * アップロードモード
+	 */
+	public upload(): void {
+
+	}
+
+	/**
 	 * 再生
 	 */
 	public play(): void {

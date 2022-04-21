@@ -37,7 +37,7 @@ export default class Index extends PureComponent<{}, State> {
 	 * @param segment
 	 */
 	private _onDivide = (segment: number): void => {
-
+		this.setState({ segment })
 	}
 
 	/**
@@ -51,7 +51,7 @@ export default class Index extends PureComponent<{}, State> {
 	 *
 	 */
 	private _onReset = (): void => {
-
+		this._editor?.reset()
 	}
 
 	public render(): ReactElement {
