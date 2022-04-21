@@ -55,7 +55,7 @@ export default class Index extends PureComponent<{}, State> {
 	}
 
 	public render(): ReactElement {
-		const { modeIndex } = this.state
+		const { modeIndex, segment } = this.state
 
 		return (
 			<main className={styles.container}>
@@ -67,6 +67,7 @@ export default class Index extends PureComponent<{}, State> {
 				/>
 				<Editor
 					modeIndex={modeIndex}
+					segment={segment}
 					ref={node => this._editor = node}
 				/>
 				<Pager

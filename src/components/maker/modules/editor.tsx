@@ -3,11 +3,12 @@ import MakerMain from "src/lib/webgl/maker";
 import styles from "src/styles/layout/maker/index.module.scss"
 
 interface Props {
-	modeIndex: number
+	modeIndex: number;
+	segment: number;
 }
 
 interface State {
-	isPlaying: boolean
+	isPlaying: boolean;
 }
 
 export default class Editor extends PureComponent<Props, State> {
@@ -31,7 +32,7 @@ export default class Editor extends PureComponent<Props, State> {
 
 	componentDidUpdate(prevProps: Props, prevState: State) {
 		const { isPlaying } = this.state
-		const { modeIndex } = this.props
+		const { modeIndex, segment } = this.props
 
 		if(prevState.isPlaying != isPlaying) {
 			isPlaying ? this._play() : this._stop()
@@ -42,6 +43,10 @@ export default class Editor extends PureComponent<Props, State> {
 			modeIndex == 1 && this._preview()
 			modeIndex == 2 && this._upload()
 		}
+
+		if(prevProps.segment != segment) {
+			this._divide(segment)
+		}
 	}
 
 	private _togglePlayMode = (): void => {
@@ -49,11 +54,13 @@ export default class Editor extends PureComponent<Props, State> {
 	}
 
 	private _divide(segment: number): void {
-
+		this._webgl?.divide(segment)
 	}
 
 	private _edit(): void {
 		this._webgl?.edit()
+		const { isPlaying } = this.state
+		isPlaying && this._stop()
 	}
 
 	private _preview(): void {
