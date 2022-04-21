@@ -4,22 +4,69 @@ import Pager from "./modules/pager";
 import ToolBar from "./modules/toolBar";
 import styles from "src/styles/layout/maker/index.module.scss"
 
+interface State {
+	modeIndex: number;
+	segment: number;
+}
+
 /**
  *
  */
-export default class Index extends PureComponent<{}, {}> {
+export default class Index extends PureComponent<{}, State> {
+
+	constructor(props: {}) {
+		super(props)
+		this.state = {
+			modeIndex: 0,
+			segment: 2
+		}
+	}
+
+	/**
+	 * モード切替
+	 * @param modeIndex
+	 */
+	private _onChangeMode = (modeIndex: number): void => {
+		this.setState({ modeIndex })
+	}
+
+	/**
+	 *
+	 * @param segment
+	 */
+	private _onDivide = (segment: number): void => {
+
+	}
+
+	/**
+	 *
+	 */
+	private _onHelp = (): void => {
+
+	}
+
+	/**
+	 *
+	 */
+	private _onReset = (): void => {
+
+	}
 
 	public render(): ReactElement {
+		const { modeIndex } = this.state
+
 		return (
 			<main className={styles.container}>
 				<ToolBar
-					mode="edit"
-					onDivide={(segment: number) => {}}
-					onHelp={() => {}}
-					onReset={() => {}}
+					modeIndex={modeIndex}
+					onDivide={this._onDivide}
+					onHelp={this._onHelp}
+					onReset={this._onReset}
 				/>
 				<Editor />
-				<Pager />
+				<Pager
+					onChangeMode={this._onChangeMode}
+				/>
 			</main>
 		);
 	}

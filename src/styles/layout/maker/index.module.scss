@@ -1,3 +1,5 @@
+@import "../../foundation//variables";
+
 .container {
 	min-height: 100vh;
 	display: flex;
@@ -8,7 +10,7 @@
 	// ツールバー
 	.toolbar {
 		width: auto;
-		height: 80px;
+		height: 70px;
 		padding-left: 10px;
 		padding-right: 10px;
 		position: absolute;
@@ -16,6 +18,13 @@
 		display: flex;
 		border: 1px solid #ededed;
 		border-radius: 0 0 20px 20px;
+
+		transform: translateY(0%);
+		transition: transform $easeOutExpo 0.3s;
+
+		&.is_hide {
+			transform: translateY(-100%);
+		}
 
 		li {
 			padding: 20px;
@@ -30,11 +39,21 @@
 
 	// メインのエディタ画面
 	.editor {
+		width: 300px;
+		height: 300px;
 		margin-bottom: 30px;
 		border: 1px solid #ededed;
+		position: relative;
 
 		// play btn
 		a {
+			width: 20px;
+			height: 20px;
+			display: inline-block;
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			background: url(/images/editor/play_bl.svg);
 		}
 	}
 
@@ -48,7 +67,7 @@
 			width: 70px;
 
 			li {
-				width: 70px;
+				width: 100%;
 				text-align: center;
 				// padding-left: 5px;
 				// padding-right: 5px;

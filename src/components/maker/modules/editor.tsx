@@ -35,13 +35,7 @@ export default class Editor extends PureComponent {
 
 	public render(): ReactElement {
 		return (
-			<div ref={this._onRef}
-				className={styles.editor}
-				style={{
-					width: "300px",
-					height: "300px"
-				}}
-			>
+			<div ref={this._onRef} className={styles.editor}>
 				{/* play button */}
 				<a href="#"></a>
 			</div>
