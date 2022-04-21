@@ -14,6 +14,8 @@ interface State {
  */
 export default class Index extends PureComponent<{}, State> {
 
+	private _editor: Editor | null = null
+
 	constructor(props: {}) {
 		super(props)
 		this.state = {
@@ -63,7 +65,10 @@ export default class Index extends PureComponent<{}, State> {
 					onHelp={this._onHelp}
 					onReset={this._onReset}
 				/>
-				<Editor isPreviewMode={modeIndex == 1} />
+				<Editor
+					modeIndex={modeIndex}
+					ref={node => this._editor = node}
+				/>
 				<Pager
 					onChangeMode={this._onChangeMode}
 				/>

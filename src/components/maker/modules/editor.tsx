@@ -3,7 +3,7 @@ import MakerMain from "src/lib/webgl/maker";
 import styles from "src/styles/layout/maker/index.module.scss"
 
 interface Props {
-	isPreviewMode: boolean
+	modeIndex: number
 }
 
 interface State {
@@ -21,10 +21,26 @@ export default class Editor extends PureComponent<Props, State> {
 		}
 	}
 
+	componentDidMount() {
+		const { modeIndex } = this.props
+
+		modeIndex == 0 && this._edit()
+		modeIndex == 1 && this._preview()
+		modeIndex == 2 && this._upload()
+	}
+
 	componentDidUpdate(prevProps: Props, prevState: State) {
 		const { isPlaying } = this.state
+		const { modeIndex } = this.props
+
 		if(prevState.isPlaying != isPlaying) {
 			isPlaying ? this._play() : this._stop()
+		}
+
+		if(prevProps.modeIndex != modeIndex) {
+			modeIndex == 0 && this._edit()
+			modeIndex == 1 && this._preview()
+			modeIndex == 2 && this._upload()
 		}
 	}
 
@@ -32,20 +48,20 @@ export default class Editor extends PureComponent<Props, State> {
 		this.setState({ isPlaying: !this.state.isPlaying })
 	}
 
-	private _divide(): void {
+	private _divide(segment: number): void {
 
 	}
 
 	private _edit(): void {
-
+		this._webgl?.edit()
 	}
 
 	private _preview(): void {
-
+		this._webgl?.preview()
 	}
 
 	private _upload(): void {
-
+		// this._webgl.up
 	}
 
 	private _play(): void {
@@ -68,14 +84,14 @@ export default class Editor extends PureComponent<Props, State> {
 	}
 
 	public render(): ReactElement {
-		const { isPreviewMode } = this.props
+		const { modeIndex } = this.props
 		const { isPlaying } = this.state
 		const btnClass = isPlaying ? styles.is_stop : ""
 		return (
 			<div ref={this._onRef} className={styles.editor}>
 				{/* play button */}
 				{
-					isPreviewMode && <a href="#" className={btnClass} onClick={this._togglePlayMode}></a>
+					modeIndex == 1 && <a href="#" className={btnClass} onClick={this._togglePlayMode}></a>
 				}
 			</div>
 		)

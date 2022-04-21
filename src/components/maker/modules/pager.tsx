@@ -16,17 +16,24 @@ export default class Pager extends PureComponent<Props> {
 
 	private _swiper: Swiper | null = null
 
+	private _onSwiper = (node: Swiper): void => {
+		if(!node) return
+		this._swiper = node
+	}
+
 	/**
 	 * slide時
 	 * @param swiper
 	 */
 	private _onSlide = (swiper: Swiper): void => {
-		const current = this._swiper?.activeIndex
-		this.props.onChangeMode(current || 0)
+		this.props.onChangeMode(swiper.activeIndex)
 	}
 
 	public render(): ReactElement {
 		// TODO: Swiper
+		const INDEX_EDIT = 0
+		const INDEX_PREVIW = 1
+		const INDEX_UPLOAD = 2
 
 		return(
 				<SwiperReact
@@ -35,17 +42,26 @@ export default class Pager extends PureComponent<Props> {
 					className={styles.pager}
 					slidesPerView={1}
 					width={70}
-					onSwiper={node => this._swiper = node}
+					onSwiper={this._onSwiper}
 					onSlideChange={this._onSlide}
 				>
 					<SwiperSlide tag="li">
-						<a href="#" onClick={() => this._swiper?.slideTo(0)}>edit</a>
+						<a
+							href="#"
+							onClick={() => this._swiper?.slideTo(INDEX_EDIT)}
+						>edit</a>
 					</SwiperSlide>
 					<SwiperSlide tag="li">
-						<a href="#" onClick={() => this._swiper?.slideTo(1)}>preview</a>
+						<a
+							href="#"
+							onClick={() => this._swiper?.slideTo(INDEX_PREVIW)}
+						>preview</a>
 					</SwiperSlide>
 					<SwiperSlide tag="li">
-						<a href="#" onClick={() => this._swiper?.slideTo(2)}>upload</a>
+						<a
+							href="#"
+							onClick={() => this._swiper?.slideTo(INDEX_UPLOAD)}
+						>upload</a>
 					</SwiperSlide>
 				</SwiperReact>
 		);
