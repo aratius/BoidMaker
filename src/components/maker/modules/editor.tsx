@@ -11,6 +11,9 @@ interface State {
 	isPlaying: boolean;
 }
 
+/**
+ *
+ */
 export default class Editor extends PureComponent<Props, State> {
 
 	private _webgl?: MakerMain
@@ -102,7 +105,13 @@ export default class Editor extends PureComponent<Props, State> {
 			<div ref={this._onRef} className={styles.editor}>
 				{/* play button */}
 				{
-					modeIndex == 1 && <a href="#" className={btnClass} onClick={this._togglePlayMode}></a>
+					modeIndex == 1 && (
+					<a
+						href="#"
+						className={btnClass}
+						onClick={this._togglePlayMode}
+					></a>
+					)
 				}
 			</div>
 		)
