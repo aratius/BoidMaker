@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, PureComponent, ReactElement } from "react";
+import { BaseSyntheticEvent, Component, ReactElement } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "src/styles/layout/maker/index.module.scss"
 
@@ -22,7 +22,7 @@ const animateOption = (i: number) => {
 /**
  * ツールバー
  */
-export default class ToolBar extends PureComponent<Props> {
+export default class ToolBar extends Component<Props> {
 
 	private _onDivideChange = (e: BaseSyntheticEvent): void => {
 		if(e && e.cancelable) e.preventDefault()
@@ -31,7 +31,8 @@ export default class ToolBar extends PureComponent<Props> {
 	}
 
 	private get _edit(): ReactElement[] {
-		const { segment } = this.props
+		const { segment, onReset } = this.props
+		console.log("segment", segment);
 
 		return (
 			[
@@ -43,7 +44,7 @@ export default class ToolBar extends PureComponent<Props> {
 						<select
 							id="divide"
 							name="divide"
-							defaultValue={segment.toString()}
+							value={segment.toString()}
 							onChange={this._onDivideChange}
 						>
 							<option value="1">1</option>
@@ -57,7 +58,7 @@ export default class ToolBar extends PureComponent<Props> {
 					{...animateOption(1)}
 					key="reset"
 				>
-					<a href="#">
+					<a href="#" onClick={onReset}>
 						<img src="images/toolbar/reset_wh.svg" alt="reset" />
 					</a>
 				</motion.li>,

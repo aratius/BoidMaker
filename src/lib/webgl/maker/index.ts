@@ -68,6 +68,17 @@ export default class MakerMain {
 	}
 
 	/**
+	 * 頂点リセット
+	 */
+	public reset(): void {
+		this._shape?.deInit();
+		const points = Parser.parsePoints(FISH);
+		this._shape = new CreatureShape(points, "circle");
+		this._app.stage.addChild(this._shape);
+		this._shape.init();
+	}
+
+	/**
 	 * 記録
 	 * @param num
 	 */

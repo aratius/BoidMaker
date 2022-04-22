@@ -72,6 +72,17 @@ export default class CreatureShape extends Container {
 	}
 
 	/**
+	 * 終了処理
+	 */
+	public deInit(): void {
+		this.removeChild(this._p, this._s, this._l, this._waist);
+		this._p = null;
+		this._l = null;
+		this._s = null;
+		this._waist = null;
+	}
+
+	/**
 	 * プレビューモード
 	 */
 	public preview(): void {

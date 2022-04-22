@@ -1,18 +1,21 @@
-import { PureComponent, ReactElement } from "react";
+import { Component, ReactElement } from "react";
 import Editor from "./modules/editor";
 import Pager from "./modules/pager";
 import ToolBar from "./modules/toolBar";
 import styles from "src/styles/layout/maker/index.module.scss"
+import { SEGMENT_DEFAULT } from "src/constants/common";
 
 interface State {
 	modeIndex: number;
 	segment: number;
 }
 
+
+
 /**
  *
  */
-export default class Index extends PureComponent<{}, State> {
+export default class Index extends Component<{}, State> {
 
 	private _editor: Editor | null = null
 
@@ -20,7 +23,7 @@ export default class Index extends PureComponent<{}, State> {
 		super(props)
 		this.state = {
 			modeIndex: 0,
-			segment: 2
+			segment: SEGMENT_DEFAULT
 		}
 	}
 
@@ -52,6 +55,7 @@ export default class Index extends PureComponent<{}, State> {
 	 */
 	private _onReset = (): void => {
 		this._editor?.reset()
+		this.setState({ segment: SEGMENT_DEFAULT })
 	}
 
 	public render(): ReactElement {

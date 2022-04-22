@@ -53,7 +53,7 @@ export default class Editor extends PureComponent<Props, State> {
 	}
 
 	public reset(): void {
-
+		this._webgl?.reset()
 	}
 
 	private _togglePlayMode = (): void => {
