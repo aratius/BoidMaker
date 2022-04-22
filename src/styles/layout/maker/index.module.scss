@@ -10,7 +10,7 @@
 	// ツールバー
 	.toolbar {
 		width: auto;
-		height: 70px;
+		// height: 70px;
 		padding-left: 10px;
 		padding-right: 10px;
 		position: absolute;
@@ -27,11 +27,41 @@
 		}
 
 		li {
-			padding: 20px;
+			width: 30px;
+			height: 30px;
+			margin: 20px;
+			position: relative;
 
 			a {
 				img {
 					height: 100%;
+				}
+			}
+
+			label {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				background: url(/images/toolbar/divide_wh.svg);
+				background-size: contain;
+
+				select {
+					width: 10px;
+					height: 10px;
+					font-size: 0.4rem;
+					font-weight: bold;
+					text-align: center;
+					position: absolute;
+					bottom: 0;
+					right: 0;
+					background-color: #ffffff;
+					border: 1px solid #000;
+					border-radius: 5px;
+					z-index: 1;
 				}
 			}
 		}

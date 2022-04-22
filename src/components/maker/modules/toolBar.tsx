@@ -30,9 +30,17 @@ export default class ToolBar extends PureComponent<Props> {
 					{...animateOption(0)}
 					key="divide"
 				>
-					<a href="#">
+					<label htmlFor="divide">
+						<select name="divide" id="divide">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="4">4</option>
+							<option value="8">8</option>
+						</select>
+					</label>
+					{/* <a href="#">
 						<img src="images/toolbar/divide_wh.svg" alt="divide" />
-					</a>
+					</a> */}
 				</motion.li>,
 				<motion.li
 					{...animateOption(1)}
