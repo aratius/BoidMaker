@@ -11,7 +11,6 @@ interface State {
 }
 
 
-
 /**
  *
  */
@@ -46,13 +45,6 @@ export default class Index extends Component<{}, State> {
 	/**
 	 *
 	 */
-	private _onHelp = (): void => {
-
-	}
-
-	/**
-	 *
-	 */
 	private _onReset = (): void => {
 		this._editor?.reset()
 		this.setState({ segment: SEGMENT_DEFAULT })
@@ -67,7 +59,6 @@ export default class Index extends Component<{}, State> {
 					modeIndex={modeIndex}
 					segment={segment}
 					onDivide={this._onDivide}
-					onHelp={this._onHelp}
 					onReset={this._onReset}
 				/>
 				<Editor

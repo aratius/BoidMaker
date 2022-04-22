@@ -9,7 +9,6 @@ interface Props {
 	segment: number;
 	onDivide: (segment: number) => void;
 	onReset: () => void;
-	onHelp: () => void;
 }
 
 const animateOption = (i: number) => {
