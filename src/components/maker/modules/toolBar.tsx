@@ -1,6 +1,7 @@
 import { BaseSyntheticEvent, Component, ReactElement } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "src/styles/layout/maker/index.module.scss"
+import { HELP_URL } from "src/constants/common";
 
 interface Props {
 	modeIndex: number;
@@ -32,8 +33,6 @@ export default class ToolBar extends Component<Props> {
 
 	private get _edit(): ReactElement[] {
 		const { segment, onReset } = this.props
-		console.log("segment", segment);
-
 		return (
 			[
 				<motion.li
@@ -66,7 +65,7 @@ export default class ToolBar extends Component<Props> {
 					{...animateOption(2)}
 					key="help"
 				>
-					<a href="#">
+					<a href={HELP_URL} target="_blank" rel="noreferrer">
 						<img src="images/toolbar/help_bl.svg" alt="help" />
 					</a>
 				</motion.li>
@@ -83,8 +82,8 @@ export default class ToolBar extends Component<Props> {
 					{...animateOption(0)}
 					key="help"
 				>
-					<a href="#">
-						<img src="images/toolbar/help_wh.svg" alt="help" />
+					<a href={HELP_URL} target="_blank" rel="noreferrer">
+						<img src="images/toolbar/help_bl.svg" alt="help" />
 					</a>
 				</motion.li>
 			]
