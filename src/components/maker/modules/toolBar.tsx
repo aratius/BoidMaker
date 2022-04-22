@@ -1,4 +1,4 @@
-import { PureComponent, ReactElement } from "react";
+import { BaseSyntheticEvent, PureComponent, ReactElement } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "src/styles/layout/maker/index.module.scss"
 
@@ -23,6 +23,12 @@ const animateOption = (i: number) => {
  */
 export default class ToolBar extends PureComponent<Props> {
 
+	private _onDivideChange = (e: BaseSyntheticEvent): void => {
+		if(e && e.cancelable) e.preventDefault()
+		const val = e.target.value
+		this.props.onDivide(val)
+	}
+
 	private get _edit(): ReactElement[] {
 		return (
 			[
@@ -31,16 +37,18 @@ export default class ToolBar extends PureComponent<Props> {
 					key="divide"
 				>
 					<label htmlFor="divide">
-						<select name="divide" id="divide">
+						<select
+							id="divide"
+							name="divide"
+							defaultValue="2"
+							onChange={this._onDivideChange}
+						>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="4">4</option>
 							<option value="8">8</option>
 						</select>
 					</label>
-					{/* <a href="#">
-						<img src="images/toolbar/divide_wh.svg" alt="divide" />
-					</a> */}
 				</motion.li>,
 				<motion.li
 					{...animateOption(1)}
