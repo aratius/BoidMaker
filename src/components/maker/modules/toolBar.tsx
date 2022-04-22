@@ -4,6 +4,7 @@ import styles from "src/styles/layout/maker/index.module.scss"
 
 interface Props {
 	modeIndex: number;
+	segment: number;
 	onDivide: (segment: number) => void;
 	onReset: () => void;
 	onHelp: () => void;
@@ -30,6 +31,8 @@ export default class ToolBar extends PureComponent<Props> {
 	}
 
 	private get _edit(): ReactElement[] {
+		const { segment } = this.props
+
 		return (
 			[
 				<motion.li
@@ -40,7 +43,7 @@ export default class ToolBar extends PureComponent<Props> {
 						<select
 							id="divide"
 							name="divide"
-							defaultValue="2"
+							defaultValue={segment.toString()}
 							onChange={this._onDivideChange}
 						>
 							<option value="1">1</option>

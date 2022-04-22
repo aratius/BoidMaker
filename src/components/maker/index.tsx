@@ -61,6 +61,7 @@ export default class Index extends PureComponent<{}, State> {
 			<main className={styles.container}>
 				<ToolBar
 					modeIndex={modeIndex}
+					segment={segment}
 					onDivide={this._onDivide}
 					onHelp={this._onHelp}
 					onReset={this._onReset}
