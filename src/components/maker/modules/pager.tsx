@@ -17,6 +17,11 @@ export default class Pager extends PureComponent<Props> {
 	private _swiper: Swiper | null = null
 	private _elements: (HTMLAnchorElement | null)[] = []
 
+	/**
+	 * スワイパーインスタンスののref
+	 * @param node
+	 * @returns
+	 */
 	private _onSwiper = (node: Swiper): void => {
 		if(!node) return
 		this._swiper = node
