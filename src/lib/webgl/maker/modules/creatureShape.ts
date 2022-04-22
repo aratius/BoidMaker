@@ -178,7 +178,7 @@ export default class CreatureShape extends Container {
 	 * 更新
 	 */
 	private _update(points: (typeof Vec2)[]): void {
-		this._p?.update(points);
+		this._p?.update(points, this._grabbingIndex);
 		this._l?.update(points);
 		this._s?.update(points);
 
@@ -253,6 +253,7 @@ export default class CreatureShape extends Container {
 			}
 		});
 		this._grabbingIndex = nearestI;
+		this._update(this._pointsNormalized);
 
 		this.on("mousemove", this._onMove);
 		this.on("mouseup", this._onUp);
@@ -278,6 +279,7 @@ export default class CreatureShape extends Container {
 	 */
 	private _onUp = (e: (typeof InteractionEvent)): void => {
 		this._grabbingIndex = -999;
+		this._update(this._pointsNormalized);
 
 		this.off("mousemove", this._onMove);
 		this.off("mouseup", this._onUp);

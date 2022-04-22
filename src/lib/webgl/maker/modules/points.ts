@@ -15,13 +15,21 @@ export default class Points extends Graphics {
 	 * 更新
 	 * @param points
 	 */
-	public update(points: (typeof Vec2)[]): void {
+	public update(points: (typeof Vec2)[], grabbingIndex: number): void {
 		this.clear();
 		this.beginFill(0x000000, 0.3);
-		this.lineStyle(1, 0xffffff, 0.3);
+		const inactive = () => this.lineStyle(1, 0xffffff, 0.3);
+		const active = () => this.lineStyle(1, 0xff1111, 3);
+		inactive();
 		for (let i = 0; i < points.length; i++) {
 			const p = points[i];
-			this.drawCircle(p.x, p.y, 5, 5);
+			if (grabbingIndex == i) {
+				active();
+				this.drawCircle(p.x, p.y, 6, 6);
+				inactive();
+			} else {
+				this.drawCircle(p.x, p.y, 5, 5);
+			}
 		}
 	}
 

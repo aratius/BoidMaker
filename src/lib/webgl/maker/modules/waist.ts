@@ -26,7 +26,7 @@ export default class Waist extends Sprite {
 		this.anchor.x = 0.5;
 		this.anchor.y = 0.5;
 		this.alpha = 1;
-		this.tint = 0x000000;
+		this.tint = 0xcccccc;
 		this.interactive = true;
 
 		this.on("mousedown", this._onDown);
