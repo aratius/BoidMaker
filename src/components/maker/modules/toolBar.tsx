@@ -59,7 +59,7 @@ export default class ToolBar extends Component<Props> {
 					key="reset"
 				>
 					<a href="#" onClick={onReset}>
-						<img src="images/toolbar/reset_wh.svg" alt="reset" />
+						<img src="images/toolbar/reset_bl.svg" alt="reset" />
 					</a>
 				</motion.li>,
 				<motion.li
@@ -67,7 +67,7 @@ export default class ToolBar extends Component<Props> {
 					key="help"
 				>
 					<a href="#">
-						<img src="images/toolbar/help_wh.svg" alt="help" />
+						<img src="images/toolbar/help_bl.svg" alt="help" />
 					</a>
 				</motion.li>
 			]
