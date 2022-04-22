@@ -1,5 +1,5 @@
 import { PureComponent, ReactElement } from "react";
-import { INDEX_EDIT, INDEX_PREVIW, INDEX_UPLOAD } from "src/constants/editor";
+import { INDEX_EDIT, INDEX_PREVIEW, INDEX_UPLOAD } from "src/constants/editor";
 import MakerMain from "src/lib/webgl/maker";
 import styles from "src/styles/layout/maker/index.module.scss"
 
@@ -34,7 +34,7 @@ export default class Editor extends PureComponent<Props, State> {
 		const { modeIndex } = this.props
 
 		modeIndex == INDEX_EDIT && this._edit()
-		modeIndex == INDEX_PREVIW && this._preview()
+		modeIndex == INDEX_PREVIEW && this._preview()
 		modeIndex == INDEX_UPLOAD && this._upload()
 	}
 
@@ -48,7 +48,7 @@ export default class Editor extends PureComponent<Props, State> {
 
 		if(prevProps.modeIndex != modeIndex) {
 			modeIndex == INDEX_EDIT && this._edit()
-			modeIndex == INDEX_PREVIW && this._preview()
+			modeIndex == INDEX_PREVIEW && this._preview()
 			modeIndex == INDEX_UPLOAD && this._upload()
 		}
 
@@ -110,7 +110,7 @@ export default class Editor extends PureComponent<Props, State> {
 			<div ref={this._onRef} className={styles.editor}>
 				{/* play button */}
 				{
-					modeIndex == INDEX_PREVIW && (
+					modeIndex == INDEX_PREVIEW && (
 					<a
 						href="#"
 						className={btnClass}

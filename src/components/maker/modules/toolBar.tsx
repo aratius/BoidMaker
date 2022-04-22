@@ -2,7 +2,7 @@ import { BaseSyntheticEvent, Component, ReactElement } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "src/styles/layout/maker/index.module.scss"
 import { HELP_URL } from "src/constants/common";
-import { INDEX_PREVIW } from "src/constants/editor";
+import { INDEX_EDIT, INDEX_PREVIEW, INDEX_UPLOAD } from "src/constants/editor";
 
 interface Props {
 	modeIndex: number;
@@ -43,7 +43,7 @@ export default class ToolBar extends Component<Props> {
 		return (
 			[
 				<motion.li
-					{...animateOption(0)}
+					{...animateOption(INDEX_EDIT)}
 					key="divide"
 				>
 					<label htmlFor="divide">
@@ -61,7 +61,7 @@ export default class ToolBar extends Component<Props> {
 					</label>
 				</motion.li>,
 				<motion.li
-					{...animateOption(1)}
+					{...animateOption(INDEX_PREVIEW)}
 					key="reset"
 				>
 					<a href="#" onClick={onReset}>
@@ -69,7 +69,7 @@ export default class ToolBar extends Component<Props> {
 					</a>
 				</motion.li>,
 				<motion.li
-					{...animateOption(2)}
+					{...animateOption(INDEX_UPLOAD)}
 					key="help"
 				>
 					<a href={HELP_URL} target="_blank" rel="noreferrer">
@@ -102,7 +102,7 @@ export default class ToolBar extends Component<Props> {
 
 	public render(): ReactElement {
 		const { modeIndex } = this.props
-		const hideClass = modeIndex == INDEX_PREVIW ? styles.is_hide : ""
+		const hideClass = modeIndex == INDEX_PREVIEW ? styles.is_hide : ""
 
 		return (
 			<ul className={`${styles.toolbar} ${hideClass}`}>

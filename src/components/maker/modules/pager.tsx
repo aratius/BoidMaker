@@ -4,7 +4,7 @@ import { Swiper as SwiperReact, SwiperSlide } from 'swiper/react';
 import styles from "src/styles/layout/maker/index.module.scss"
 
 import 'swiper/css';
-import { INDEX_EDIT, INDEX_PREVIW, INDEX_UPLOAD } from "src/constants/editor";
+import { INDEX_EDIT, INDEX_PREVIEW, INDEX_UPLOAD } from "src/constants/editor";
 
 interface Props {
 	onChangeMode: (modeIndex: number) => void;
@@ -72,8 +72,8 @@ export default class Pager extends PureComponent<Props> {
 					<SwiperSlide tag="li">
 						<a
 							href="#"
-							onClick={() => this._swiper?.slideTo(INDEX_PREVIW)}
-							ref={node => this._elements[INDEX_PREVIW] = node}
+							onClick={() => this._swiper?.slideTo(INDEX_PREVIEW)}
+							ref={node => this._elements[INDEX_PREVIEW] = node}
 						>preview</a>
 					</SwiperSlide>
 					<SwiperSlide tag="li">
