@@ -4,6 +4,7 @@ import { Swiper as SwiperReact, SwiperSlide } from 'swiper/react';
 import styles from "src/styles/layout/maker/index.module.scss"
 
 import 'swiper/css';
+import { INDEX_EDIT, INDEX_PREVIW, INDEX_UPLOAD } from "src/constants/editor";
 
 interface Props {
 	onChangeMode: (modeIndex: number) => void;
@@ -50,9 +51,6 @@ export default class Pager extends PureComponent<Props> {
 
 	public render(): ReactElement {
 		// TODO: Swiper
-		const INDEX_EDIT = 0
-		const INDEX_PREVIW = 1
-		const INDEX_UPLOAD = 2
 
 		return(
 				<SwiperReact

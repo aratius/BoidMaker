@@ -2,6 +2,7 @@ import { BaseSyntheticEvent, Component, ReactElement } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "src/styles/layout/maker/index.module.scss"
 import { HELP_URL } from "src/constants/common";
+import { INDEX_PREVIW } from "src/constants/editor";
 
 interface Props {
 	modeIndex: number;
@@ -25,12 +26,19 @@ const animateOption = (i: number) => {
  */
 export default class ToolBar extends Component<Props> {
 
+	/**
+	 * 分割数を変更する
+	 * @param e
+	 */
 	private _onDivideChange = (e: BaseSyntheticEvent): void => {
 		if(e && e.cancelable) e.preventDefault()
 		const val = e.target.value
 		this.props.onDivide(val)
 	}
 
+	/**
+	 * 編集画面
+	 */
 	private get _edit(): ReactElement[] {
 		const { segment, onReset } = this.props
 		return (
@@ -73,6 +81,9 @@ export default class ToolBar extends Component<Props> {
 		)
 	}
 
+	/**
+	 * プレビュー画面
+	 */
 	private get _preview(): ReactElement[] {
 		return (
 			[
@@ -92,7 +103,7 @@ export default class ToolBar extends Component<Props> {
 
 	public render(): ReactElement {
 		const { modeIndex } = this.props
-		const hideClass = modeIndex == 2 ? styles.is_hide : ""
+		const hideClass = modeIndex == INDEX_PREVIW ? styles.is_hide : ""
 
 		return (
 			<ul className={`${styles.toolbar} ${hideClass}`}>

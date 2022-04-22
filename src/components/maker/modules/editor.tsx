@@ -1,4 +1,5 @@
 import { PureComponent, ReactElement } from "react";
+import { INDEX_EDIT, INDEX_PREVIW, INDEX_UPLOAD } from "src/constants/editor";
 import MakerMain from "src/lib/webgl/maker";
 import styles from "src/styles/layout/maker/index.module.scss"
 
@@ -12,12 +13,16 @@ interface State {
 }
 
 /**
- *
+ * 編集画面
  */
 export default class Editor extends PureComponent<Props, State> {
 
-	private _webgl?: MakerMain
+	private _webgl?: MakerMain  // webgl
 
+	/**
+	 * コンストラクタ
+	 * @param props
+	 */
 	constructor(props: Props) {
 		super(props)
 		this.state = {
@@ -28,9 +33,9 @@ export default class Editor extends PureComponent<Props, State> {
 	componentDidMount() {
 		const { modeIndex } = this.props
 
-		modeIndex == 0 && this._edit()
-		modeIndex == 1 && this._preview()
-		modeIndex == 2 && this._upload()
+		modeIndex == INDEX_EDIT && this._edit()
+		modeIndex == INDEX_PREVIW && this._preview()
+		modeIndex == INDEX_UPLOAD && this._upload()
 	}
 
 	componentDidUpdate(prevProps: Props, prevState: State) {
@@ -42,9 +47,9 @@ export default class Editor extends PureComponent<Props, State> {
 		}
 
 		if(prevProps.modeIndex != modeIndex) {
-			modeIndex == 0 && this._edit()
-			modeIndex == 1 && this._preview()
-			modeIndex == 2 && this._upload()
+			modeIndex == INDEX_EDIT && this._edit()
+			modeIndex == INDEX_PREVIW && this._preview()
+			modeIndex == INDEX_UPLOAD && this._upload()
 		}
 
 		if(prevProps.segment != segment) {
@@ -105,7 +110,7 @@ export default class Editor extends PureComponent<Props, State> {
 			<div ref={this._onRef} className={styles.editor}>
 				{/* play button */}
 				{
-					modeIndex == 1 && (
+					modeIndex == INDEX_PREVIW && (
 					<a
 						href="#"
 						className={btnClass}
