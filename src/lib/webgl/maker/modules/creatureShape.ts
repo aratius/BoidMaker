@@ -27,11 +27,19 @@ export default class CreatureShape extends Container {
 	private _p?: (typeof Graphics);  // 頂点
 	private _s?: (typeof Graphics);  // 形
 	private _l?: (typeof Graphics);  // 線
-	private _waist?: (typeof Graphics);
+	private _waist: Waist | null = null;
 	private _grabbingIndex: number = -999;
 	private _segmentMag: number = 2;  // 分割数の倍率
 	private _angle: number = 0;
 	private _playTimeline?: GSAPTimeline;
+
+	public get points(): (typeof Vec2) {
+		return this._pointsNormalized;
+	}
+
+	public get center(): (typeof Vec2) {
+		return new Vec2(this._waist!.x, this._waist!.y);
+	}
 
 	private get _pointsNormalized(): (typeof Vec2)[] {
 		// TODO: ここハードコードなので
@@ -90,7 +98,7 @@ export default class CreatureShape extends Container {
 		this._p.visible = false;
 		this._l.visible = false;
 		this._s.visible = true;
-		this._waist.visible = false;
+		this._waist!.visible = false;
 		this._grabPoints.forEach(g => g.interactive = false);
 	}
 
@@ -102,7 +110,7 @@ export default class CreatureShape extends Container {
 		this._p.visible = true;
 		this._l.visible = true;
 		this._s.visible = true;
-		this._waist.visible = true;
+		this._waist!.visible = true;
 		this._grabPoints.forEach(g => g.interactive = true);
 	}
 
@@ -206,7 +214,7 @@ export default class CreatureShape extends Container {
 	 */
 	private _updateByAngle = (): void => {
 		const points = this._pointsNormalized;
-		const waistPos = new Vec2(this._waist.x, this._waist.y);
+		const waistPos = new Vec2(this._waist?.x, this._waist?.y);
 
 		this._update(
 			points.map(p => {

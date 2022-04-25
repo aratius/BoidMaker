@@ -1,3 +1,4 @@
+import upload from "src/server/upload";
 import CreatureShape from "./modules/creatureShape";
 import Parser from "./modules/parser";
 import { CIRCLE, FISH } from "./modules/svg";
@@ -50,7 +51,9 @@ export default class MakerMain {
 	 * アップロードモード
 	 */
 	public upload(): void {
-
+		const points = this._shape?.points;
+		const center = this._shape?.center;
+		upload(points, center);
 	}
 
 	/**
