@@ -53,7 +53,7 @@ export default class MakerMain {
 	public upload(): void {
 		const points = this._shape?.points;
 		const center = this._shape?.center;
-		upload(points, center);
+		// upload(points, center);
 	}
 
 	/**

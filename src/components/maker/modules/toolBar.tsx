@@ -107,8 +107,7 @@ export default class ToolBar extends Component<Props> {
 
 	public render(): ReactElement {
 		const { modeIndex } = this.props
-		const hideClass = modeIndex == INDEX_PREVIEW ? styles.is_hide : ""
-
+		const hideClass = modeIndex == INDEX_UPLOAD ? styles.is_hide : ""
 		return (
 			<ul className={`${styles.toolbar} ${hideClass}`}>
 				{
