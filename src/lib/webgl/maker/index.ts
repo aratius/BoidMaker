@@ -1,3 +1,5 @@
+import createChild from "src/server/createChild";
+import getData from "src/server/get";
 import upload from "src/server/upload";
 import CreatureShape from "./modules/creatureShape";
 import Parser from "./modules/parser";
@@ -51,9 +53,25 @@ export default class MakerMain {
 	 * アップロードモード
 	 */
 	public upload(): void {
+		this._shape?.preview();
+
 		const points = this._shape?.points;
 		const center = this._shape?.center;
 		// upload(points, center);
+		createChild([
+			{
+				points,
+				center,
+				id: "hige"
+			},
+			{
+				points,
+				center,
+				id: "hoge"
+			}
+		],
+			2);
+		// getData();
 	}
 
 	/**
