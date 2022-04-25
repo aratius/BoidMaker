@@ -1,8 +1,8 @@
 import { BaseSyntheticEvent, Component, ReactElement } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import styles from "src/styles/layout/maker/index.module.scss"
 import { HELP_URL } from "src/constants/common";
 import { INDEX_EDIT, INDEX_PREVIEW, INDEX_UPLOAD } from "src/constants/editor";
+import styles from "src/styles/layout/maker/index.module.scss"
 
 interface Props {
 	modeIndex: number;
@@ -11,6 +11,11 @@ interface Props {
 	onReset: () => void;
 }
 
+/**
+ * motion liのアニメーションオプション
+ * @param i
+ * @returns
+ */
 const animateOption = (i: number) => {
 	return {
 		initial: { opacity: 0, y: -5 },
@@ -119,5 +124,4 @@ export default class ToolBar extends Component<Props> {
 			</ul>
 		);
 	}
-
 }

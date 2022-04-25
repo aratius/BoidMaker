@@ -35,7 +35,7 @@ export default class Index extends Component<{}, State> {
 	}
 
 	/**
-	 *
+	 * 分割
 	 * @param segment
 	 */
 	private _onDivide = (segment: number): void => {
