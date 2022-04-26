@@ -114,6 +114,15 @@ export default class CreatureShape extends Container {
 		this._grabPoints.forEach(g => g.interactive = true);
 	}
 
+	public upload(): void {
+		// TODO: モード切替
+		this._p.visible = false;
+		this._l.visible = false;
+		this._s.visible = true;
+		this._waist!.visible = false;
+		this._grabPoints.forEach(g => g.interactive = false);
+	}
+
 	/**
 	 * 再生（プレビューモードのみ）
 	 */

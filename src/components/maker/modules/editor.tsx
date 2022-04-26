@@ -106,8 +106,9 @@ export default class Editor extends PureComponent<Props, State> {
 		const { modeIndex } = this.props
 		const { isPlaying } = this.state
 		const btnClass = isPlaying ? styles.is_stop : ""
+		const wrapperClass = modeIndex == INDEX_UPLOAD ? styles.is_upload : ""
 		return (
-			<div ref={this._onRef} className={styles.editor}>
+			<div ref={this._onRef} className={`${styles.editor} ${wrapperClass}`}>
 				{/* play button */}
 				{
 					modeIndex == INDEX_PREVIEW && (

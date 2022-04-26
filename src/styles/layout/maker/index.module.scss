@@ -75,6 +75,10 @@
 		border: 1px solid #ededed;
 		position: relative;
 
+		&.is_upload {
+			border: 1px solid #ffffff;
+		}
+
 		// play btn
 		a {
 			width: 20px;

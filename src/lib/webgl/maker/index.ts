@@ -53,25 +53,7 @@ export default class MakerMain {
 	 * アップロードモード
 	 */
 	public upload(): void {
-		this._shape?.preview();
-
-		const points = this._shape?.points;
-		const center = this._shape?.center;
-		// upload(points, center);
-		createChild([
-			{
-				points,
-				center,
-				id: "hige"
-			},
-			{
-				points,
-				center,
-				id: "hoge"
-			}
-		],
-			2);
-		// getData();
+		this._shape?.upload();
 	}
 
 	/**
