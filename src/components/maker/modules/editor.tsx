@@ -7,6 +7,7 @@ import styles from "src/styles/layout/maker/index.module.scss"
 interface Props {
 	modeIndex: number;
 	segment: number;
+	onUpload: () => void
 }
 
 interface State {
@@ -101,7 +102,7 @@ export default class Editor extends PureComponent<Props, State> {
 	}
 
 	private _onEndUpload = (): void => {
-
+		this.props.onUpload()
 	}
 
 	/**

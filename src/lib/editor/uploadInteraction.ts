@@ -64,11 +64,16 @@ export default class UploadInteraction extends EventEmitter {
 	private _upload(): void {
 		if (this._uploadtimeline != null) this._uploadtimeline.kill();
 		this._uploadtimeline = gsap.timeline({
-			onComplete: () => { this.emit(UploadInteraction.END); },
 			onUpdate: () => { this.emit(UploadInteraction.UPDATE, this._y); }
 		});
 		this._uploadtimeline.to(this._container!, { y: -innerHeight / 3, ease: "expo.out" }, 0);
-		this._uploadtimeline.to(this._container!, { alpha: 0, ease: "sine.out" }, 0);
+		this._uploadtimeline.to(this._container!, {
+			alpha: 0, ease: "sine.out",
+			onComplete: () => {
+				alert("upload complete!");
+				this.emit(UploadInteraction.END);
+			},
+		}, 0);
 		this._uploadtimeline.set(this._container!, { y: 10 });
 		this._uploadtimeline.to(this._container!, { y: 0, alpha: 1, ease: "expo.out" });
 	}
@@ -76,7 +81,6 @@ export default class UploadInteraction extends EventEmitter {
 	private _cancelUpload(): void {
 		if (this._uploadtimeline != null) this._uploadtimeline.kill();
 		this._uploadtimeline = gsap.timeline({
-			onComplete: () => { this.emit(UploadInteraction.END); },
 			onUpdate: () => { this.emit(UploadInteraction.UPDATE, this._y); }
 		});
 		this._uploadtimeline.to(this._container!, { y: 0, ease: "circ.out" }, 0);

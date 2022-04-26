@@ -17,6 +17,7 @@ interface State {
 export default class Index extends Component<{}, State> {
 
 	private _editor: Editor | null = null
+	private _pager: Pager | null = null
 
 	constructor(props: {}) {
 		super(props)
@@ -50,6 +51,10 @@ export default class Index extends Component<{}, State> {
 		this.setState({ segment: SEGMENT_DEFAULT })
 	}
 
+	private _onUpload = (): void => {
+		this._pager?.changeMode(0)
+	}
+
 	public render(): ReactElement {
 		const { modeIndex, segment } = this.state
 
@@ -64,10 +69,12 @@ export default class Index extends Component<{}, State> {
 				<Editor
 					modeIndex={modeIndex}
 					segment={segment}
+					onUpload={this._onUpload}
 					ref={node => this._editor = node}
 				/>
 				<Pager
 					onChangeMode={this._onChangeMode}
+					ref={node => this._pager = node}
 				/>
 			</main>
 		);

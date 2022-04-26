@@ -18,6 +18,10 @@ export default class Pager extends PureComponent<Props> {
 	private _swiper: Swiper | null = null
 	private _elements: (HTMLAnchorElement | null)[] = []
 
+	public changeMode(index: number): void {
+		this._swiper?.slideTo(index)
+	}
+
 	/**
 	 * スワイパーインスタンスののref
 	 * @param node
