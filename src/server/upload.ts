@@ -13,8 +13,10 @@ const upload = async (points: Vec2[], center: Vec2) => {
 			generation: 1
 		})
 	});
+	if (!data) throw new Error("upload error");
 	const json = await data.json();
 	console.log("json", json);
+	return json;
 };
 
 export default upload;

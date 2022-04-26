@@ -2,6 +2,7 @@ import { PureComponent, ReactElement } from "react";
 import { INDEX_EDIT, INDEX_PREVIEW, INDEX_UPLOAD } from "src/constants/editor";
 import UploadInteraction from "src/lib/editor/uploadInteraction";
 import MakerMain from "src/lib/webgl/maker";
+import upload from "src/server/upload";
 import styles from "src/styles/layout/maker/index.module.scss"
 
 interface Props {
@@ -60,48 +61,87 @@ export default class Editor extends PureComponent<Props, State> {
 		}
 	}
 
+	/**
+	 * リセット
+	 */
 	public reset(): void {
 		this._webgl?.reset()
 	}
 
+	/**
+	 * プレイモード変更
+	 */
 	private _togglePlayMode = (): void => {
 		this.setState({ isPlaying: !this.state.isPlaying })
 	}
 
+	/**
+	 * 分割
+	 * @param segment
+	 */
 	private _divide(segment: number): void {
 		this._webgl?.divide(segment)
 	}
 
+	/**
+	 * 編集
+	 */
 	private _edit(): void {
 		this._webgl?.edit()
 		this.setState({ isPlaying: false })
 		this._uploadInteraction?.end()
 	}
 
+	/**
+	 * プレビュー
+	 */
 	private _preview(): void {
 		this._webgl?.preview()
 		this._uploadInteraction?.end()
 	}
 
+	/**
+	 * アップロード
+	 */
 	private _upload(): void {
 		this._webgl?.upload()
 		this.setState({ isPlaying: false })
 		this._uploadInteraction?.start()
 	}
 
+	/**
+	 * 再生
+	 */
 	private _play(): void {
 		this._webgl?.play()
 	}
 
+	/**
+	 * 停止
+	 */
 	private _stop(): void {
 		this._webgl?.stop()
 	}
 
-	private _onUpdateUpload = (y: number): void => {
+	/**
+	 * アップロードインタラクションの更新時
+	 * @param y
+	 */
+	private _onUpdateUploadinteraction = (y: number): void => {
 		this._webgl?.updateByProgress(y/10)
 	}
 
-	private _onCompleteUpload = (): void => {
+	/**
+	 * アップロード完了
+	 */
+	private _onCompleteUpload = async (): Promise<void> => {
+		const points = this._webgl?.getPoints(8)
+		const center = this._webgl?.center
+		if(points && center) {
+			console.log("upda");
+
+			await upload(points, center)
+		}
 		this.props.onCompleteUpload()
 	}
 
@@ -115,7 +155,7 @@ export default class Editor extends PureComponent<Props, State> {
 		this._webgl = new MakerMain(node)
 		this._webgl.init()
 		this._uploadInteraction = new UploadInteraction(node)
-		this._uploadInteraction.on(UploadInteraction.UPDATE, this._onUpdateUpload)
+		this._uploadInteraction.on(UploadInteraction.UPDATE, this._onUpdateUploadinteraction)
 		this._uploadInteraction.on(UploadInteraction.COMPLETE, this._onCompleteUpload)
 	}
 

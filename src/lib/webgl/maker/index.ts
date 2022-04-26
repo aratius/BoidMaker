@@ -1,6 +1,5 @@
-import createChild from "src/server/createChild";
-import getData from "src/server/get";
-import upload from "src/server/upload";
+
+import Vec2 from "vec2";
 import CreatureShape from "./modules/creatureShape";
 import Parser from "./modules/parser";
 import { CIRCLE, FISH } from "./modules/svg";
@@ -26,6 +25,10 @@ export default class MakerMain {
 		const points = Parser.parsePoints(FISH);
 		this._shape = new CreatureShape(points, "circle");
 		this._app.stage.addChild(this._shape);
+	}
+
+	public get center(): Vec2 {
+		return this._shape?.center;
 	}
 
 	/**
@@ -99,6 +102,11 @@ export default class MakerMain {
 
 	public updateByProgress(prog: number): void {
 		this._shape?.updateByProgress(prog);
+	}
+
+
+	public getPoints(segmentRatio: number): Vec2[] {
+		return this._shape?.points;
 	}
 
 }

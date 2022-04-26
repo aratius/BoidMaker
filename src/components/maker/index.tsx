@@ -44,13 +44,17 @@ export default class Index extends Component<{}, State> {
 	}
 
 	/**
-	 *
+	 * リセット
 	 */
 	private _onReset = (): void => {
 		this._editor?.reset()
 		this.setState({ segment: SEGMENT_DEFAULT })
 	}
 
+	/**
+	 * アップロード完了
+	 * editモードへ戻す
+	 */
 	private _onCompleteUpload = (): void => {
 		this._pager?.changeMode(0)
 	}
