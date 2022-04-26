@@ -51,7 +51,7 @@ export default class Index extends Component<{}, State> {
 		this.setState({ segment: SEGMENT_DEFAULT })
 	}
 
-	private _onUpload = (): void => {
+	private _onCompleteUpload = (): void => {
 		this._pager?.changeMode(0)
 	}
 
@@ -69,7 +69,7 @@ export default class Index extends Component<{}, State> {
 				<Editor
 					modeIndex={modeIndex}
 					segment={segment}
-					onUpload={this._onUpload}
+					onCompleteUpload={this._onCompleteUpload}
 					ref={node => this._editor = node}
 				/>
 				<Pager

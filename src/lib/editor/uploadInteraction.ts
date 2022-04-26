@@ -9,7 +9,7 @@ const TOP = typeof window !== "undefined" ? -innerHeight / 3 : -300;
  */
 export default class UploadInteraction extends EventEmitter {
 
-	public static END: string = "end";
+	public static COMPLETE: string = "end";
 	public static UPDATE: string = "update";
 
 	private _container?: HTMLElement;
@@ -78,7 +78,7 @@ export default class UploadInteraction extends EventEmitter {
 			alpha: 0, ease: "sine.out",
 			onComplete: () => {
 				alert("upload complete!");
-				this.emit(UploadInteraction.END);
+				this.emit(UploadInteraction.COMPLETE);
 			},
 		}, 0);
 		this._uploadtimeline.set(this._container!, { y: 10 });

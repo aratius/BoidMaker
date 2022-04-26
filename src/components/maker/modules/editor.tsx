@@ -7,7 +7,7 @@ import styles from "src/styles/layout/maker/index.module.scss"
 interface Props {
 	modeIndex: number;
 	segment: number;
-	onUpload: () => void
+	onCompleteUpload: () => void
 }
 
 interface State {
@@ -101,8 +101,8 @@ export default class Editor extends PureComponent<Props, State> {
 		this._webgl?.updateByProgress(y/10)
 	}
 
-	private _onEndUpload = (): void => {
-		this.props.onUpload()
+	private _onCompleteUpload = (): void => {
+		this.props.onCompleteUpload()
 	}
 
 	/**
@@ -116,7 +116,7 @@ export default class Editor extends PureComponent<Props, State> {
 		this._webgl.init()
 		this._uploadInteraction = new UploadInteraction(node)
 		this._uploadInteraction.on(UploadInteraction.UPDATE, this._onUpdateUpload)
-		this._uploadInteraction.on(UploadInteraction.END, this._onEndUpload)
+		this._uploadInteraction.on(UploadInteraction.COMPLETE, this._onCompleteUpload)
 	}
 
 	public render(): ReactElement {
