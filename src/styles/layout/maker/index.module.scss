@@ -97,6 +97,8 @@
 	// ページャー
 	.pager {
 		overflow: visible;
+		position: absolute;
+		bottom: 50px;
 
 		ul {
 			display: flex;
