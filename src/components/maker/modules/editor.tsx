@@ -1,5 +1,6 @@
 import { PureComponent, ReactElement } from "react";
 import { INDEX_EDIT, INDEX_PREVIEW, INDEX_UPLOAD } from "src/constants/editor";
+import UploadInteraction from "src/lib/editor/uploadInteraction";
 import MakerMain from "src/lib/webgl/maker";
 import styles from "src/styles/layout/maker/index.module.scss"
 
@@ -18,6 +19,7 @@ interface State {
 export default class Editor extends PureComponent<Props, State> {
 
 	private _webgl?: MakerMain  // webgl
+	private _uploadInteraction?: UploadInteraction
 
 	/**
 	 * コンストラクタ
@@ -72,15 +74,18 @@ export default class Editor extends PureComponent<Props, State> {
 	private _edit(): void {
 		this._webgl?.edit()
 		this.setState({ isPlaying: false })
+		this._uploadInteraction?.end()
 	}
 
 	private _preview(): void {
 		this._webgl?.preview()
+		this._uploadInteraction?.end()
 	}
 
 	private _upload(): void {
 		this._webgl?.upload()
 		this.setState({ isPlaying: false })
+		this._uploadInteraction?.start()
 	}
 
 	private _play(): void {
@@ -89,6 +94,14 @@ export default class Editor extends PureComponent<Props, State> {
 
 	private _stop(): void {
 		this._webgl?.stop()
+	}
+
+	private _onUpdateUpload = (y: number): void => {
+		this._webgl?.updateByProgress(y/10)
+	}
+
+	private _onEndUpload = (): void => {
+
 	}
 
 	/**
@@ -100,6 +113,9 @@ export default class Editor extends PureComponent<Props, State> {
 		if(!node) return
 		this._webgl = new MakerMain(node)
 		this._webgl.init()
+		this._uploadInteraction = new UploadInteraction(node)
+		this._uploadInteraction.on(UploadInteraction.UPDATE, this._onUpdateUpload)
+		this._uploadInteraction.on(UploadInteraction.END, this._onEndUpload)
 	}
 
 	public render(): ReactElement {

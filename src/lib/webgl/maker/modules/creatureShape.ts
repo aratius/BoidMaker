@@ -159,6 +159,16 @@ export default class CreatureShape extends Container {
 	}
 
 	/**
+	 * 進捗度でupdate
+	 * @param prog
+	 */
+	public updateByProgress(prog: number): void {
+		const RANGE = 0.2;
+		this._angle = Math.sin(prog) * RANGE;
+		this._updateByAngle();
+	}
+
+	/**
 	 * 分割数を変更（編集モードのみ）
 	 * @param mag 分割倍率 2の倍数である必要がある
 	 */

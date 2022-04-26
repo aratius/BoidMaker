@@ -97,4 +97,8 @@ export default class MakerMain {
 		this._shape?.divide(ratio);
 	}
 
+	public updateByProgress(prog: number): void {
+		this._shape?.updateByProgress(prog);
+	}
+
 }
