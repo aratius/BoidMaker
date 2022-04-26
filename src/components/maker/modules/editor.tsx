@@ -141,6 +141,8 @@ export default class Editor extends PureComponent<Props, State> {
 		const center = this._webgl?.center
 		if(points && center) await upload(points, center)
 		this.props.onCompleteUpload()
+		alert("upload complete!");
+		this._uploadInteraction?.reset()
 	}
 
 	/**
