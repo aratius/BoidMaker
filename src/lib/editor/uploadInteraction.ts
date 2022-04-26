@@ -2,7 +2,11 @@ import EventEmitter from "events";
 import gsap from "gsap";
 
 const SPEED_THRESHOLD = 20;
+const TOP = typeof window !== "undefined" ? -innerHeight / 3 : -300;
 
+/**
+ * 魚のアップロード機能周りのインタラクションを管理するクラス
+ */
 export default class UploadInteraction extends EventEmitter {
 
 	public static END: string = "end";
@@ -54,8 +58,11 @@ export default class UploadInteraction extends EventEmitter {
 	};
 
 	private _onTouchEnd = (e: TouchEvent): void => {
-		if (this._speed < -SPEED_THRESHOLD) this._upload();
-		else this._cancelUpload();
+		if (this._y < TOP) this._upload();
+		else {
+			if (this._speed < -SPEED_THRESHOLD) this._upload();
+			else this._cancelUpload();
+		}
 
 		window.removeEventListener("touchmove", this._onTouchMove);
 		window.removeEventListener("touchend", this._onTouchEnd);
@@ -66,7 +73,7 @@ export default class UploadInteraction extends EventEmitter {
 		this._uploadtimeline = gsap.timeline({
 			onUpdate: () => { this.emit(UploadInteraction.UPDATE, this._y); }
 		});
-		this._uploadtimeline.to(this._container!, { y: -innerHeight / 3, ease: "expo.out" }, 0);
+		this._uploadtimeline.to(this._container!, { y: TOP, ease: "expo.out" }, 0);
 		this._uploadtimeline.to(this._container!, {
 			alpha: 0, ease: "sine.out",
 			onComplete: () => {
