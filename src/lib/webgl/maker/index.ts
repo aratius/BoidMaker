@@ -2,7 +2,7 @@
 import Vec2 from "vec2";
 import CreatureShape from "./modules/creatureShape";
 import Parser from "./modules/parser";
-import { CIRCLE, FISH } from "./modules/svg";
+import { FISH } from "./modules/svg";
 const isClient = typeof window !== "undefined";
 const Application = isClient ? require("pixi.js").Application : class { };
 

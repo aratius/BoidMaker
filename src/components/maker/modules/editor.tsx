@@ -139,9 +139,7 @@ export default class Editor extends PureComponent<Props, State> {
 		// 子供作るときに頂点の計算がややこしくなるため
 		const points = this._webgl?.getPoints(8)
 		const center = this._webgl?.center
-		if(points && center) {
-			await upload(points, center)
-		}
+		if(points && center) await upload(points, center)
 		this.props.onCompleteUpload()
 	}
 
