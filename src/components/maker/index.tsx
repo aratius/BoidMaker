@@ -10,7 +10,6 @@ interface State {
 	segment: number;
 }
 
-
 /**
  *
  */

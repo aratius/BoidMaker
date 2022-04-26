@@ -163,9 +163,24 @@ export default class CreatureShape extends Container {
 	 * @param mag 分割倍率 2の倍数である必要がある
 	 */
 	public divide(mag: number): void {
+		const points = this.getDividedPoints(mag);
+		if (points.length == 0) return;
+
+		this._points = points;
+		this._segmentMag = mag;
+		this._setGrabPoints();
+		this._update(this._pointsNormalized);
+	}
+
+	/**
+	 * 分割後の頂点を返す
+	 * @param mag
+	 * @returns
+	 */
+	public getDividedPoints(mag: number): (typeof Vec2)[] {
 		if (mag % 2 != 0 && mag != 1) {
 			console.error("mag is not multiplied of 2", mag);
-			return;
+			return [];
 		}
 
 		let points = this._pointsNormalized;
@@ -195,11 +210,7 @@ export default class CreatureShape extends Container {
 		};
 
 		magRelated > 1 ? increased() : descreased();
-
-		this._points = points;
-		this._segmentMag = mag;
-		this._setGrabPoints();
-		this._update(this._pointsNormalized);
+		return points;
 	}
 
 	/**

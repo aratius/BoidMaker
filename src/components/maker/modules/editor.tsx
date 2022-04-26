@@ -135,11 +135,11 @@ export default class Editor extends PureComponent<Props, State> {
 	 * アップロード完了
 	 */
 	private _onCompleteUpload = async (): Promise<void> => {
+		// アップロード時にかならず頂点分割は8にしてからアップロード
+		// 子供作るときに頂点の計算がややこしくなるため
 		const points = this._webgl?.getPoints(8)
 		const center = this._webgl?.center
 		if(points && center) {
-			console.log("upda");
-
 			await upload(points, center)
 		}
 		this.props.onCompleteUpload()

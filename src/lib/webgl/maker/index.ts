@@ -104,9 +104,13 @@ export default class MakerMain {
 		this._shape?.updateByProgress(prog);
 	}
 
-
+	/**
+	 * 頂点数指定でpointsを取得
+	 * @param segmentRatio
+	 * @returns
+	 */
 	public getPoints(segmentRatio: number): Vec2[] {
-		return this._shape?.points;
+		return this._shape?.getDividedPoints(segmentRatio) || [];
 	}
 
 }
