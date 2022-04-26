@@ -1,7 +1,7 @@
 import EventEmitter from "events";
 import gsap from "gsap";
 
-const SPEED_THRESHOLD = 20;
+const SPEED_THRESHOLD = 10;
 const TOP = typeof window !== "undefined" ? -innerHeight / 3 : -300;
 
 /**
