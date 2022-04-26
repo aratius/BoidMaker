@@ -50,6 +50,7 @@ export default class UploadInteraction extends EventEmitter {
 		if (e.touches.length > 0) {
 			this._touchStartY = e.touches[0].clientY;
 			this._lastTouchY = this._touchStartY;
+			this._speed = 0;
 		}
 	};
 
@@ -71,6 +72,9 @@ export default class UploadInteraction extends EventEmitter {
 			if (this._speed < -SPEED_THRESHOLD) this._upload();
 			else this._cancelUpload();
 		}
+
+		this._touchStartY = -999;
+		this._lastTouchY = -999;
 
 		window.removeEventListener("touchmove", this._onTouchMove);
 		window.removeEventListener("touchend", this._onTouchEnd);
