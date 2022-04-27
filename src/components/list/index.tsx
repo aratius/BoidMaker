@@ -13,7 +13,7 @@ interface Props {}
 
 interface State {
 	fishes: {[id: string]: Fish},
-	selected: Fish[]
+	selected: number[]
 }
 
 export default class Index extends Component<Props, State> {
@@ -55,16 +55,30 @@ export default class Index extends Component<Props, State> {
 		}
 	}
 
+	private _onClick = (i: number): void => {
+
+		const selected = [...this.state.selected]
+		if(selected.indexOf(i) > 0) {
+			for(let j = 0; j < selected.length; j++)
+				if(selected[j] == i) selected.splice(j, 1)
+		} else selected.push(i)
+
+		while(selected.length > 2) selected.splice(0, 1)
+
+		this.setState({	selected })
+	}
+
 	render(): ReactElement {
-		const { fishes } = this.state
+		const { fishes, selected } = this.state
 
 		return (
 			<main className={styles.container}>
 				<ul>
 					{
-						Object.keys(fishes).map(id => {
+						Object.keys(fishes).map((id, i) => {
+							const selectedClass = selected.indexOf(i) >= 0 ? styles.is_selected : ""
 							return (
-								<li key={id}>
+								<li key={id} onClick={() => this._onClick(i)} className={selectedClass}>
 									<img src={fishes[id].image} alt="" />
 								</li>
 							)

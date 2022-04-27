@@ -8,6 +8,10 @@
 		li {
 			flex-shrink: 0;
 			width: 100px;
+
+			&.is_selected {
+				border: 1px solid red;
+			}
 		}
 
 	}
