@@ -317,7 +317,13 @@ export default class CreatureShape extends Container {
 	private _onMove = (e: (typeof InteractionEvent)): void => {
 		if (this._grabbingIndex < 0 || this._grabbingIndex > this._grabPoints.length - 1) return;
 
-		const p = e.data.getLocalPosition(this);
+		let p = e.data.getLocalPosition(this);
+
+		// 画面から点が出ないように丸める
+		// TODO: ちゃんとcontainerのサイズを取得したほうが良い
+		const MAX = 300;
+		const round = (v: number) => Math.min(Math.max(v, 0), MAX);
+		p = new Vec2(round(p.x), round(p.y));
 		this._points[this._grabbingIndex] = new Vec2(p.x, p.y);  // this._pointsを上書き _pointsを上書きできるのはここだけ
 		this._update(this._pointsNormalized);
 	};
