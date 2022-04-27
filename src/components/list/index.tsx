@@ -77,7 +77,7 @@ export default class Index extends Component<Props, State> {
 		const parents = [fishes[selected[0]], fishes[selected[1]]]
 		const res = await createChild([{...parents[0], id: selected[0]}, {...parents[1], id: selected[1]}], 2)
 		this.setState({child: res.body.image})
-
+		this._update()
 	}
 
 	render(): ReactElement {
