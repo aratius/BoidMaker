@@ -74,6 +74,9 @@
 		margin-bottom: 30px;
 		position: relative;
 
+		background: url(/images/editor/pattern.png);
+		background-size: 10px;
+
 		$BORDER: 1px solid #ededed;
 
 		&::before {
@@ -101,7 +104,10 @@
 		}
 
 		&.is_upload {
-			border: 1px solid #ffffff;
+			background: none;
+			&::before, &::after {
+				opacity: 0;
+			}
 		}
 
 		// play btn
