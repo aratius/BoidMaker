@@ -18,7 +18,7 @@ const createChild = async (parents: [Fish, Fish], generation: number) => {
 		})
 	});
 	const json = await data.json();
-	console.log("json", json);
+	return json;
 };
 
 export default createChild;
