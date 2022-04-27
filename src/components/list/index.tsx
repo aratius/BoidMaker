@@ -58,7 +58,7 @@ export default class Index extends Component<Props, State> {
 	private _onClick = (i: number): void => {
 
 		const selected = [...this.state.selected]
-		if(selected.indexOf(i) > 0) {
+		if(selected.indexOf(i) >= 0) {
 			for(let j = 0; j < selected.length; j++)
 				if(selected[j] == i) selected.splice(j, 1)
 		} else selected.push(i)
