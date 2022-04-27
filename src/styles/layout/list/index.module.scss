@@ -4,17 +4,23 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: flex-start;
+		align-items: flex-start;
+		margin: auto;
+		max-width: 815px;
+		overflow-y: scroll;
 
 		li {
 			flex-shrink: 0;
 			width: 100px;
+			height: 100px;
+			border: 1px solid #cccccc;
 
 			&:hover {
 				opacity: 0.8;
 			}
 
 			&.is_selected {
-				border: 1px solid red;
+				border: 2px solid #db3a34;
 			}
 		}
 
