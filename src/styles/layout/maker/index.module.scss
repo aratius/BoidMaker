@@ -72,8 +72,31 @@
 		width: 300px;
 		height: 300px;
 		margin-bottom: 30px;
-		border: 1px solid #ededed;
 		position: relative;
+
+		$BORDER: 1px solid #ededed;
+
+		&::before {
+			content: "";
+			width: 110%;
+			height: 100%;
+			border-top: $BORDER;
+			border-bottom: $BORDER;
+			position: absolute;
+			top: 0;
+			left: -5%;
+		}
+
+		&::after {
+			content: "";
+			width: 100%;
+			height: 110%;
+			border-left: $BORDER;
+			border-right: $BORDER;
+			position: absolute;
+			top: -5%;
+			left: 0;
+		}
 
 		&.is_upload {
 			border: 1px solid #ffffff;
