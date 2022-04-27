@@ -1,0 +1,15 @@
+.container {
+
+	ul {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+
+		li {
+			flex-shrink: 0;
+			width: 100px;
+		}
+
+	}
+
+}

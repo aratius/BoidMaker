@@ -1,6 +1,7 @@
 import { Component, ReactElement } from "react";
 import getData from "src/server/get";
 import Vec2 from "vec2";
+import styles from "src/styles/layout/list/index.module.scss"
 
 interface Fish {
 	points: Vec2[],
@@ -31,14 +32,14 @@ export default class Index extends Component<Props, State> {
 
 	private async _update(): Promise<void> {
 		try {
-
 			const data  = await getData()
 			const fishes: {[id: string]: Fish} = {}
 			data.body.Items.forEach((fish: any) => {
+				const { points, center, image } = fish
 				fishes[fish.id] = {
-					points: JSON.parse(fish.points),
-					center: JSON.parse(fish.center),
-					image: fish.image,
+					points: JSON.parse(points),
+					center: JSON.parse(center),
+					image,
 				}
 			})
 
@@ -50,16 +51,15 @@ export default class Index extends Component<Props, State> {
 				}
 			})
 		} catch(err) {
-
+			console.error(err)
 		}
 	}
 
 	render(): ReactElement {
 		const { fishes } = this.state
-		console.log(fishes);
 
 		return (
-			<main>
+			<main className={styles.container}>
 				<ul>
 					{
 						Object.keys(fishes).map(id => {
