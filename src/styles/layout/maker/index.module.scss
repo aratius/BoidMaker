@@ -27,9 +27,9 @@
 		}
 
 		li {
-			width: 40px;
-			height: 40px;
-			margin: 20px;
+			width: 30px;
+			height: 30px;
+			margin: 15px;
 			position: relative;
 
 			a {
@@ -85,6 +85,7 @@
 			position: absolute;
 			top: 0;
 			left: -5%;
+			pointer-events: none;
 		}
 
 		&::after {
@@ -96,6 +97,7 @@
 			position: absolute;
 			top: -5%;
 			left: 0;
+			pointer-events: none;
 		}
 
 		&.is_upload {
