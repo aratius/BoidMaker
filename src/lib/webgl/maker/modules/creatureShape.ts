@@ -270,8 +270,8 @@ export default class CreatureShape extends Container {
 
 		this._grabPoints = this._points.map(_ => {
 			const s = new Sprite(Texture.WHITE);
-			s.width = 20;
-			s.height = 20;
+			s.width = 30;
+			s.height = 30;
 			s.zIndex = 4;
 			s.anchor.x = 0.5;
 			s.anchor.y = 0.5;
