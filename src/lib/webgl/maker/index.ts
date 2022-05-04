@@ -15,7 +15,7 @@ export default class MakerMain {
 
 	private _app?: typeof Application;
 	private _shape?: CreatureShape;
-	private _pointIndex: number = Math.floor(Math.random() * SVG_LIST.length);
+	private _pointIndexCount: number = Math.floor(Math.random() * SVG_LIST.length);
 
 	/**
 	 * コンストラクタ
@@ -118,6 +118,6 @@ export default class MakerMain {
 	}
 
 	private _getSVG(): string {
-		return SVG_LIST[(this._pointIndex++) % SVG_LIST.length];
+		return SVG_LIST[(this._pointIndexCount++) % SVG_LIST.length];
 	}
 }
