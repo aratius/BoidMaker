@@ -6,6 +6,8 @@ import { CATFISH, FISH, FLOUNDER, HAMMERHEAD_SHARK } from "./modules/svg";
 const isClient = typeof window !== "undefined";
 const Application = isClient ? require("pixi.js").Application : class { };
 
+const SVG_LIST = [FISH, CATFISH, HAMMERHEAD_SHARK, FLOUNDER];
+
 /**
  * Makerのエントリーポイント
  */
@@ -13,6 +15,7 @@ export default class MakerMain {
 
 	private _app?: typeof Application;
 	private _shape?: CreatureShape;
+	private _pointIndex: number = Math.floor(Math.random() * SVG_LIST.length);
 
 	/**
 	 * コンストラクタ
@@ -22,7 +25,7 @@ export default class MakerMain {
 		this._app = new Application({ resizeTo: dom, transparent: true });
 		dom.appendChild(this._app.view);
 
-		const points = Parser.parsePoints(CATFISH);
+		const points = Parser.parsePoints(this._getSVG());
 		this._shape = new CreatureShape(points, "circle");
 		this._app.stage.addChild(this._shape);
 	}
@@ -30,6 +33,7 @@ export default class MakerMain {
 	public get center(): Vec2 {
 		return this._shape?.center;
 	}
+
 
 	/**
 	 * 初期化
@@ -78,7 +82,7 @@ export default class MakerMain {
 	 */
 	public reset(): void {
 		this._shape?.deInit();
-		const points = Parser.parsePoints(FISH);
+		const points = Parser.parsePoints(this._getSVG());
 		this._shape = new CreatureShape(points, "circle");
 		this._app.stage.addChild(this._shape);
 		this._shape.init();
@@ -113,4 +117,7 @@ export default class MakerMain {
 		return this._shape?.getDividedPoints(segmentRatio) || [];
 	}
 
+	private _getSVG(): string {
+		return SVG_LIST[(this._pointIndex++) % SVG_LIST.length];
+	}
 }
