@@ -2,7 +2,7 @@
 import Vec2 from "vec2";
 import CreatureShape from "./modules/creatureShape";
 import Parser from "./modules/parser";
-import { FISH } from "./modules/svg";
+import { CATFISH, FISH, FLOUNDER, HAMMERHEAD_SHARK } from "./modules/svg";
 const isClient = typeof window !== "undefined";
 const Application = isClient ? require("pixi.js").Application : class { };
 
@@ -22,7 +22,7 @@ export default class MakerMain {
 		this._app = new Application({ resizeTo: dom, transparent: true });
 		dom.appendChild(this._app.view);
 
-		const points = Parser.parsePoints(FISH);
+		const points = Parser.parsePoints(CATFISH);
 		this._shape = new CreatureShape(points, "circle");
 		this._app.stage.addChild(this._shape);
 	}
