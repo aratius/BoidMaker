@@ -136,6 +136,28 @@
 				background: url(/images/editor/stop_bl.svg);
 			}
 		}
+
+		.swipeup {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate3d(-50%, -50%, 0);
+			color: #aaa;
+			font-size: 2rem;
+			z-index: 10;
+			transition: opacity 0.2s;
+			@keyframes blink {
+				0% {opacity: 0;}
+				40% {opacity: 1;}
+				60% {opacity: 1;}
+				100% {opacity: 0;}
+			}
+			animation: blink 1.4s infinite;
+			&.is_swiping {
+				animation: none;
+				opacity: 0;
+			}
+		}
 	}
 
 	// ページャー

@@ -13,6 +13,7 @@ interface Props {
 
 interface State {
 	isPlaying: boolean;
+	isSwiping: boolean;
 }
 
 /**
@@ -30,7 +31,8 @@ export default class Editor extends PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			isPlaying: false
+			isPlaying: false,
+			isSwiping: false
 		}
 	}
 
@@ -129,6 +131,7 @@ export default class Editor extends PureComponent<Props, State> {
 	 */
 	private _onUpdateUploadinteraction = (y: number): void => {
 		this._webgl?.updateByProgress(y/10)
+		this.setState({isSwiping: y!=0})
 	}
 
 	/**
@@ -161,8 +164,9 @@ export default class Editor extends PureComponent<Props, State> {
 
 	public render(): ReactElement {
 		const { modeIndex } = this.props
-		const { isPlaying } = this.state
+		const { isPlaying, isSwiping } = this.state
 		const btnClass = isPlaying ? styles.is_stop : ""
+		const msgClass = isSwiping ? styles.is_swiping : ""
 		const wrapperClass = modeIndex == INDEX_UPLOAD ? styles.is_upload : ""
 		return (
 			<div ref={this._onRef} className={`${styles.editor} ${wrapperClass}`}>
@@ -174,6 +178,13 @@ export default class Editor extends PureComponent<Props, State> {
 						className={btnClass}
 						onClick={this._togglePlayMode}
 					></a>
+					)
+				}
+
+				{/* Swipe up msg */}
+				{
+					modeIndex == INDEX_UPLOAD && (
+						<p className={`${styles.swipeup} ${msgClass}`}>Swipe up</p>
 					)
 				}
 			</div>
