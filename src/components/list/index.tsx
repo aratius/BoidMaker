@@ -3,11 +3,13 @@ import getData from "src/server/get";
 import Vec2 from "vec2";
 import styles from "src/styles/layout/list/index.module.scss"
 import createChild from "src/server/createChild";
+import deleteFish from "src/server/delete";
 
 interface Fish {
 	points: Vec2[],
 	center: Vec2[],
-	image: string
+	image: string,
+	generation: number
 }
 
 interface Props {}
@@ -38,11 +40,12 @@ export default class Index extends Component<Props, State> {
 			const data  = await getData()
 			const fishes: {[id: string]: Fish} = {}
 			data.body.Items.forEach((fish: any) => {
-				const { points, center, image } = fish
+				const { points, center, image, generation } = fish
 				fishes[fish.id] = {
 					points: JSON.parse(points),
 					center: JSON.parse(center),
 					image,
+					generation
 				}
 			})
 
@@ -80,6 +83,18 @@ export default class Index extends Component<Props, State> {
 		this._update()
 	}
 
+	private _deleteChild = async(): Promise<void> => {
+		const { fishes, selected } = this.state
+		if(selected.length < 1) return
+		const target = selected[0]
+		const fish = fishes[target]
+		const res = await deleteFish(selected[0], fish.generation);
+		console.log(res);
+
+		this.setState({selected: []})
+		this._update()
+	}
+
 	render(): ReactElement {
 		const { fishes, selected, child } = this.state
 
@@ -99,6 +114,7 @@ export default class Index extends Component<Props, State> {
 				</ul>
 
 				<input type="submit" value="CHILD" onClick={this._createChild} />
+				<input type="submit" value="DELETE" onClick={this._deleteChild} />
 
 				<p className={styles.child}>
 					<img src={child} alt="" />
