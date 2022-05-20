@@ -51,10 +51,7 @@ export default class Index extends Component<Props, State> {
 
 			this.setState({
 				...this.state,
-				fishes: {
-					...this.state.fishes,
-					...fishes
-				}
+				fishes
 			})
 		} catch(err) {
 			console.error(err)
@@ -89,7 +86,6 @@ export default class Index extends Component<Props, State> {
 		const target = selected[0]
 		const fish = fishes[target]
 		const res = await deleteFish(selected[0], fish.generation);
-		console.log(res);
 
 		this.setState({selected: []})
 		this._update()
