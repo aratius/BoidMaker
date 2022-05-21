@@ -33,7 +33,8 @@ export default class Index extends Component<{}, State> {
 	}
 
 	private _onTouch = (e: TouchEvent): void => {
-		if((e.target as Element).closest(styles.container) == null) e.preventDefault();
+		if("." + (e.target as Element).closest(styles.container) == null) e.preventDefault();
+
 	}
 
 	/**
