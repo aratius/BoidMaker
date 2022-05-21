@@ -26,6 +26,16 @@ export default class Index extends Component<{}, State> {
 		}
 	}
 
+	componentDidMount(): void {
+		window.addEventListener("touchstart", this._onTouch);
+		window.addEventListener("touchmove", this._onTouch);
+		window.addEventListener("touchend", this._onTouch);
+	}
+
+	private _onTouch = (e: TouchEvent): void => {
+		if((e.target as Element).closest(styles.container) == null) e.preventDefault();
+	}
+
 	/**
 	 * モード切替
 	 * @param modeIndex
